@@ -27,7 +27,7 @@ function App() {
         />
         <IconButton iconSrc={filterIcon} />
         <SongCard imgSrc="" name="Deaf Radio" album="Greek" />
-        <Input />
+        <Input label="Artist" />
       </ContextProvider>
     </QueryClientProvider>
   );

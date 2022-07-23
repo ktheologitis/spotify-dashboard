@@ -1,7 +1,7 @@
 import "./input.scss";
 import searchIcon from "../../static/icons/search.svg";
 
-const Input = () => {
+const Input = ({ label }: { label: string }) => {
   return (
     <div className="input-container">
       <label
@@ -12,7 +12,7 @@ const Input = () => {
       </label>
       <input
         className="input-container__input"
-        placeholder="Artist"
+        placeholder={label}
         name="spotify-input"
         type="text"
       ></input>
