@@ -10,6 +10,7 @@ import {
 } from "@tanstack/react-query";
 import Button from "./Button/Button";
 import IconButton from "./IconButton/IconButton";
+import ArtistCard from "./ArtistCard/ArtistCard";
 
 function App() {
   const queryClient = new QueryClient();
@@ -24,6 +25,7 @@ function App() {
           style={ButtonStyles.Secondary}
         />
         <IconButton iconSrc={filterIcon} />
+        <ArtistCard imgSrc="" name="Deaf Radio" />
       </ContextProvider>
     </QueryClientProvider>
   );
