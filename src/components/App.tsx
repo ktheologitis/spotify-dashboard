@@ -1,8 +1,11 @@
-import ContextProvider from "./components/ContextProvider";
-import Child from "./components/Child";
-import "./App.css";
+import ContextProvider from "./ContextProvider";
+import Child from "./Child";
+import "../stylesheets/global.scss";
 
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import {
+  QueryClient,
+  QueryClientProvider,
+} from "@tanstack/react-query";
 
 function App() {
   const queryClient = new QueryClient();
