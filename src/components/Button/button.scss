@@ -8,9 +8,19 @@
     font-family: $app-font-semibold;
     font-size: 1.2rem;
     text-align: center; 
-    text-transform: capitalize;   
-    letter-spacing: 2%;
+    text-transform: uppercase;   
+    letter-spacing: 0.1rem;
     border-radius: 500px;
+    border: none;
+
+    &:hover {
+        cursor: pointer;
+        transform: scale(1.1);
+    }
+
+    &:active {
+        outline: 3px solid black;
+    }
 
     &--secondary {
         background-color: white
