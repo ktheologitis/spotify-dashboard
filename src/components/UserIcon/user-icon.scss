@@ -1,0 +1,46 @@
+@import "../../stylesheets/_variables.scss";
+
+.user-icon {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    max-width: 80px;
+    background-color: black;
+    height: 2.5rem;
+    border: none;
+    padding-right: 1.6rem;
+    border-radius: 500px;
+
+    &__image {
+        border-radius: 50%;
+        background-color: $spotify-green;
+        min-width: 2.5rem;
+        max-width: 2.5rem;
+        height: 100%;
+        overflow: hidden;
+    }
+
+    &__name {
+        font-size: 1.2rem;
+        font-family: $app-font-semibold;
+        color: white;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    .user-icon {
+        height: 3.5rem;
+        max-width: 100px;
+
+        &__image{
+            min-width: 3.5rem;
+            max-width: 3.5rem;
+        }
+
+        &__name {
+            font-size: 1.6rem;
+        }
+    }
+}

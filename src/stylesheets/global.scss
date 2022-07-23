@@ -1,7 +1,36 @@
 @import "_variables";
 
-body {
-    box-sizing: border-box;
+html {
+    font-size: 10px;
+    box-sizing: border-box;    
+}
+
+body {    
+    margin: 0;    
     background-color: $spotify-black;
-    color: $spotify-white;
+}
+
+@font-face {
+    font-family: "Sansation-Bold";
+    src: url("../static/fonts/Sansation-Bold.ttf");
+}
+
+@font-face {
+    font-family: "WorkSans-Bold";
+    src: url("../static/fonts/WorkSans-Bold.ttf");
+}
+
+@font-face {
+    font-family: "WorkSans-Medium";
+    src: url("../static/fonts/WorkSans-Medium.ttf");
+}
+
+@font-face {
+    font-family: "WorkSans-Regular";
+    src: url("../static/fonts/WorkSans-Regular.ttf");
+}
+
+@font-face {
+    font-family: "WorkSans-SemiBold";
+    src: url("../static/fonts/WorkSans-SemiBold.ttf");
 }

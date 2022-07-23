@@ -9,7 +9,7 @@ export const AuthContext = React.createContext({
 const ContextProvider = ({
   children,
 }: {
-  children: JSX.Element;
+  children: React.ReactNode;
 }) => {
   const [auth, setAuth] = useState({
     token: initialToken,
