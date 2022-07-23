@@ -10,8 +10,8 @@ import {
 } from "@tanstack/react-query";
 import Button from "./Button/Button";
 import IconButton from "./IconButton/IconButton";
-import ArtistCard from "./ArtistCard/ArtistCard";
 import SongCard from "./SongCard/SongCard";
+import Input from "./Input/Input";
 
 function App() {
   const queryClient = new QueryClient();
@@ -27,6 +27,7 @@ function App() {
         />
         <IconButton iconSrc={filterIcon} />
         <SongCard imgSrc="" name="Deaf Radio" album="Greek" />
+        <Input label="Artist" />
       </ContextProvider>
     </QueryClientProvider>
   );
