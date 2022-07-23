@@ -13,6 +13,17 @@ import IconButton from "./IconButton/IconButton";
 import SongCard from "./SongCard/SongCard";
 import Input from "./Input/Input";
 import Dialog from "./Dialog/Dialog";
+import Slider from "@mui/material/Slider";
+import {
+  createTheme,
+  ThemeProvider,
+} from "@mui/material/styles";
+
+const theme = createTheme({
+  palette: {
+    primary: { main: "#1db954" },
+  },
+});
 
 function App() {
   const queryClient = new QueryClient();
@@ -34,6 +45,9 @@ function App() {
         <IconButton iconSrc={filterIcon} />
         <SongCard imgSrc="" name="Deaf Radio" album="Greek" />
         <Input label="Artist" />
+        <ThemeProvider theme={theme}>
+          <Slider />
+        </ThemeProvider>
       </ContextProvider>
     </QueryClientProvider>
   );
