@@ -8,7 +8,7 @@ const Button = ({
   label: string;
   style: ButtonStyles;
 }) => {
-  return <button className={style}>{label}</button>;
+  return <button className={`${style}`}>{label}</button>;
 };
 
 export default Button;
