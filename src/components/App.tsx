@@ -12,6 +12,7 @@ import Button from "./Button/Button";
 import IconButton from "./IconButton/IconButton";
 import SongCard from "./SongCard/SongCard";
 import Input from "./Input/Input";
+import Dialog from "./Dialog/Dialog";
 
 function App() {
   const queryClient = new QueryClient();
@@ -19,6 +20,11 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <ContextProvider>
+        {/* <Dialog
+          header="Your authorization has expired."
+          message="Please re-authorize."
+          buttonLabel="Re-authorize"
+        /> */}
         <AppBar />
         <Button label="Authorize" style={ButtonStyles.Primary} />
         <Button
