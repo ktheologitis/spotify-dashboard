@@ -1,0 +1,25 @@
+@import "../../stylesheets/variables";
+
+.input-container {
+  display: flex;
+  align-items: center;
+  height: 3.6rem;
+  border-radius: 500px;
+  background-color: white;
+  gap: 1rem;
+  padding: 0 1rem;
+
+  &__icon {
+    width: 2.4rem;
+    height: 2.4rem;
+  }
+
+  &__input {
+    all: unset;
+    height: 100%;
+    width: 100%;
+    background-color: transparent;
+    font-size: 1.6rem;
+    font-family: $app-font-medium;
+  }
+}
