@@ -11,6 +11,7 @@ import {
 import Button from "./Button/Button";
 import IconButton from "./IconButton/IconButton";
 import ArtistCard from "./ArtistCard/ArtistCard";
+import SongCard from "./SongCard/SongCard";
 
 function App() {
   const queryClient = new QueryClient();
@@ -25,7 +26,7 @@ function App() {
           style={ButtonStyles.Secondary}
         />
         <IconButton iconSrc={filterIcon} />
-        <ArtistCard imgSrc="" name="Deaf Radio" />
+        <SongCard imgSrc="" name="Deaf Radio" album="Greek" />
       </ContextProvider>
     </QueryClientProvider>
   );
