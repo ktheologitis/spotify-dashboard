@@ -1,11 +1,12 @@
 import ContextProvider from "./ContextProvider";
 import AppBar from "./AppBar/AppBar";
-import FilterPage from "../pages/FilterPage/Filterpage";
+import RecommendationsPage from "../pages/RecommendationsPage/RecommendationPage";
 import {
   QueryClient,
   QueryClientProvider,
 } from "@tanstack/react-query";
 import "../stylesheets/global.scss";
+import FilterPage from "../pages/FilterPage/Filterpage";
 
 function App() {
   const queryClient = new QueryClient();
@@ -14,7 +15,8 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <ContextProvider>
         <AppBar />
-        <FilterPage />
+        <RecommendationsPage />
+        {/* <FilterPage /> */}
       </ContextProvider>
     </QueryClientProvider>
   );
