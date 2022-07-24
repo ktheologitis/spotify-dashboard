@@ -1,6 +1,6 @@
 import ContextProvider from "./ContextProvider";
 import AppBar from "./AppBar/AppBar";
-import { ButtonStyles } from "../lib/enums";
+import { ButtonStyles, IconButtonStyles } from "../lib/enums";
 import filterIcon from "../static/icons/filter.svg";
 import "../stylesheets/global.scss";
 
@@ -14,10 +14,14 @@ import SongCard from "./SongCard/SongCard";
 import Input from "./Input/Input";
 import Dialog from "./Dialog/Dialog";
 import Slider from "@mui/material/Slider";
+import AuthorizationPage from "../pages/AuthorizationPage/AuthorizarionPage";
 import {
   createTheme,
   ThemeProvider,
 } from "@mui/material/styles";
+import x from "../static/icons/x.svg";
+import FilterPage from "../pages/FilterPage/Filterpage";
+import Chip from "./Chip/Chip";
 
 const theme = createTheme({
   palette: {
@@ -31,12 +35,15 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <ContextProvider>
+        <AppBar />
+        <FilterPage />
+        {/* <AuthorizationPage /> */}
         {/* <Dialog
           header="Your authorization has expired."
           message="Please re-authorize."
           buttonLabel="Re-authorize"
         /> */}
-        <AppBar />
+        {/* <AppBar />
         <Button label="Authorize" style={ButtonStyles.Primary} />
         <Button
           label="Sign up for spotify"
@@ -47,7 +54,7 @@ function App() {
         <Input label="Artist" />
         <ThemeProvider theme={theme}>
           <Slider />
-        </ThemeProvider>
+        </ThemeProvider> */}
       </ContextProvider>
     </QueryClientProvider>
   );

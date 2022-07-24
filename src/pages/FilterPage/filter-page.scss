@@ -1,0 +1,16 @@
+@import "../../stylesheets/variables";
+
+.filter-page {
+  padding: 0 1.6rem;
+
+  .genres-section {
+    width: 100%;
+
+    &__main {
+      margin-top: 2.4rem;
+      display: flex;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+    }
+  }
+}

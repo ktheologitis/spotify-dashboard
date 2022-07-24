@@ -1,0 +1,18 @@
+@import "../../stylesheets/_variables";
+
+.chip {
+  padding: 0 1.2rem;
+  text-align: center;
+  font-family: $app-font-regular;
+  font-size: 1.2rem;
+  color: white;
+  background-color: $spotify-black;
+  border: 0.2rem solid $spotify-green;
+  border-radius: 500px;
+
+  &:hover,
+  &:active {
+    background-color: $spotify-green;
+    cursor: pointer;
+  }
+}

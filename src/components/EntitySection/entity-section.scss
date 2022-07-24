@@ -1,0 +1,61 @@
+@import "../../stylesheets/variables";
+
+.entity-section {
+  margin-top: 2.4rem;
+  &__title {
+    font-family: $app-font-bold;
+    font-size: 2rem;
+    color: white;
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    .input-container {
+      width: 150px;
+      margin-left: auto;
+    }
+  }
+
+  &__main {
+    margin-top: 1.6rem;
+    display: flex;
+    gap: 1.6rem;
+    overflow-x: auto;
+  }
+
+  &__footer {
+    margin-top: 1.6rem;
+    display: flex;
+    justify-content: flex-end;
+
+    em {
+      font-size: 1.2rem;
+      font-family: $app-font-semibold;
+      color: white;
+      font-style: normal;
+    }
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .entity-section {
+    &__title {
+      font-size: 3.2rem;
+    }
+
+    &__header {
+      .input-container {
+        width: 350px;
+      }
+    }
+
+    &__footer {
+      em {
+        font-size: 2rem;
+      }
+    }
+  }
+}
