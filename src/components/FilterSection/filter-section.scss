@@ -17,6 +17,14 @@
       width: 150px;
       margin-left: auto;
     }
+
+    .audio-feature-value {
+      background-color: black;
+      font-family: $app-font-bold;
+      font-size: 1.6rem;
+      color: white;
+      margin-left: auto;
+    }
   }
 
   &__main {
@@ -24,6 +32,20 @@
     display: flex;
     gap: 1.6rem;
     overflow-x: auto;
+    overflow-y: hidden;
+  }
+
+  &__main--genres {
+    margin-top: 2.4rem;
+    display: flex;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+  }
+
+  &__main--audio-feature {
+    margin-top: 1.6rem;
+    display: flex;
+    justify-content: center;
   }
 
   &__footer {
@@ -50,11 +72,18 @@
       .input-container {
         width: 350px;
       }
+
+      .audio-feature-value {
+        font-family: $app-font-bold;
+        font-size: 2rem;
+        color: white;
+        margin-left: auto;
+      }
     }
 
     &__footer {
       em {
-        font-size: 2rem;
+        font-size: 1.6rem;
       }
     }
   }

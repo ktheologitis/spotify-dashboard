@@ -1,14 +1,14 @@
 import React from "react";
 import ArtistCard from "../../components/ArtistCard/ArtistCard";
-import EntitySection from "../../components/EntitySection/EntitySection";
+import FilterSection from "../../components/FilterSection/FilterSection";
 import SongCard from "../../components/SongCard/SongCard";
 import Chip from "../../components/Chip/Chip";
 import IconButton from "../../components/IconButton/IconButton";
+import SliderInput from "../../components/SliderInput/SliderInput";
+import { Filters, IconButtonStyles } from "../../lib/enums";
+import okIcon from "../../static/icons/ok.svg";
+
 import "./filter-page.scss";
-import "../../components/EntitySection/entity-section.scss";
-import informationIcon from "../../static/icons/information.svg";
-import updateIcon from "../../static/icons/update.svg";
-import { IconButtonStyles } from "../../lib/enums";
 
 const FilterPage = () => {
   const artistData: { name: string; imgSrc: string }[] = [
@@ -53,7 +53,7 @@ const FilterPage = () => {
     </>
   );
 
-  const genres = [
+  const genreData = [
     { name: "Classical" },
     { name: "Classical" },
     { name: "Classical" },
@@ -67,36 +67,73 @@ const FilterPage = () => {
     { name: "Classical" },
   ];
 
+  const genres = (
+    <>
+      {genreData.map((genre, index) => {
+        return (
+          <React.Fragment key={index}>
+            <Chip label={genre.name} />
+          </React.Fragment>
+        );
+      })}
+    </>
+  );
+
   return (
     <main className="filter-page">
-      <EntitySection title="Artists" entities={artists} />
-      <EntitySection title="Songs" entities={songs} />
-      <section className="entity-section">
-        <header className="entity-section__header">
-          <h1 className="entity-section__title">Genres</h1>
-          <IconButton
-            iconSrc={informationIcon}
-            style={IconButtonStyles.Secondary}
-          />
-          <IconButton
-            iconSrc={updateIcon}
-            style={IconButtonStyles.Secondary}
-          />
-        </header>
-        <main className="genres-section__main">
-          {genres.map((genre, index) => {
-            return (
-              <React.Fragment key={index}>
-                <Chip label={genre.name} />
-              </React.Fragment>
-            );
-          })}
-        </main>
-        <footer className="entity-section__footer">
-          <em>See selected</em>
-        </footer>
+      <FilterSection
+        type={Filters.Artist}
+        title="Artists"
+        filter={artists}
+      />
+      <FilterSection
+        type={Filters.Song}
+        title="Songs"
+        filter={songs}
+      />
+      <FilterSection
+        type={Filters.Genre}
+        title="Genres"
+        filter={genres}
+      />
+      <FilterSection
+        type={Filters.AudioFeature}
+        title="Acousticness"
+        filter={
+          <div className="slider-wrapper">
+            <SliderInput />
+          </div>
+        }
+      />
+      <FilterSection
+        type={Filters.AudioFeature}
+        title="Valence"
+        filter={
+          <div className="slider-wrapper">
+            <SliderInput />
+          </div>
+        }
+      />
+      <FilterSection
+        type={Filters.AudioFeature}
+        title="Danceability"
+        filter={
+          <div className="slider-wrapper">
+            <SliderInput />
+          </div>
+        }
+      />
+      <FilterSection
+        type={Filters.AudioFeature}
+        title="Loudness"
+        filter={<SliderInput />}
+      />
+      <section className="ok-icon-button">
+        <IconButton
+          iconSrc={okIcon}
+          style={IconButtonStyles.Primary}
+        />
       </section>
-      <section className="filter-page__audio-feature-section"></section>
     </main>
   );
 };

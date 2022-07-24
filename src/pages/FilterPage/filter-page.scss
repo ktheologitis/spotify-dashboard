@@ -1,16 +1,21 @@
 @import "../../stylesheets/variables";
 
 .filter-page {
+  position: relative;
+  margin-bottom: 5rem;
   padding: 0 1.6rem;
+}
 
-  .genres-section {
-    width: 100%;
+.ok-icon-button {
+  display: flex;
+  justify-content: flex-end;
+  position: sticky;
+  bottom: 1.6rem;
+}
 
-    &__main {
-      margin-top: 2.4rem;
-      display: flex;
-      gap: 0.8rem;
-      flex-wrap: wrap;
-    }
+@media screen and (min-width: 768px) {
+  .filter-page {
+    padding-left: 25rem;
+    padding-right: 25rem;
   }
 }

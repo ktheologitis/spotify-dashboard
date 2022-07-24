@@ -7,3 +7,10 @@ export enum IconButtonStyles {
   Primary = "icon-button",
   Secondary = "icon-button icon-button--secondary",
 }
+
+export enum Filters {
+  Artist,
+  Song,
+  Genre,
+  AudioFeature,
+}
