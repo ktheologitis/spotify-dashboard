@@ -17,6 +17,15 @@ body,
   height: 100%;
 }
 
+*::-webkit-scrollbar {
+  height: 0.8rem;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: rgb(51, 59, 51);
+  border-radius: 500px;
+}
+
 @font-face {
   font-family: "Sansation-Bold";
   src: url("../static/fonts/Sansation-Bold.ttf");
