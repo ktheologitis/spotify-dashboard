@@ -16,10 +16,24 @@
     background-color: $spotify-dark-green;
   }
 
-  &__icon {
+  .icon {
     display: inline;
     width: 3.2rem;
     height: 3.2rem;
+  }
+}
+
+.icon-button.icon-button--secondary {
+  width: 3.2rem;
+  height: 3.2rem;
+  background-color: $spotify-black;
+
+  &:hover {
+    background-color: transparent;
+  }
+
+  .icon {
+    filter: brightness(0) invert(1);
   }
 }
 

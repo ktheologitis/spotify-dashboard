@@ -4,5 +4,6 @@
   "prettier.endOfLine": "lf",
   "prettier.jsxSingleQuote": false,
   "prettier.printWidth": 65,
-  "css.lint.unknownAtRules": "ignore"
+  "css.lint.unknownAtRules": "ignore",
+  "scss.lint.unknownAtRules": "warning"
 }
