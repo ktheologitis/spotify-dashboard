@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import ArtistCard from "../../components/ArtistCard/ArtistCard";
 import FilterSection from "../../components/FilterSection/FilterSection";
 import SongCard from "../../components/SongCard/SongCard";

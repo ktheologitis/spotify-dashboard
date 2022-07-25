@@ -1,5 +1,4 @@
 import { useContext } from "react";
-import AppTitle from "../AppTitle/AppTitle";
 import { AuthContext } from "../../contextProviders/AuthorizationContextProvider/AuthorizationContextProvider";
 import Logo from "../Logo/Logo";
 import UserIcon from "../UserIcon/UserIcon";
@@ -13,13 +12,12 @@ const AppBar = () => {
   return (
     <header className="app-bar">
       <Logo />
-      <AppTitle />
-      {auth.token && user && (
-        <UserIcon
-          imgSrc={user.image_path}
-          userName={user.name}
-        />
-      )}
+      <h1 className="app-title">RUBIN</h1>
+      <UserIcon
+        imgSrc={user ? user.image_path : ""}
+        userName={user ? user.name : ""}
+        show={user ? true : false}
+      />
     </header>
   );
 };

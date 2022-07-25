@@ -31,6 +31,10 @@
   }
 }
 
+.user-icon--hidden {
+  visibility: hidden;
+}
+
 @media screen and (min-width: 768px) {
   .user-icon {
     height: 3.5rem;
