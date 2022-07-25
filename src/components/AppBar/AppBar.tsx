@@ -1,12 +1,10 @@
 import { useContext } from "react";
-import { AuthContext } from "../../contextProviders/AuthorizationContextProvider/AuthorizationContextProvider";
 import Logo from "../Logo/Logo";
 import UserIcon from "../UserIcon/UserIcon";
 import "./app-bar.scss";
 import { UserDataContext } from "../../contextProviders/UserDataContextProvider/UserDataContextProvider";
 
 const AppBar = () => {
-  const auth = useContext(AuthContext);
   const user = useContext(UserDataContext);
 
   return (
