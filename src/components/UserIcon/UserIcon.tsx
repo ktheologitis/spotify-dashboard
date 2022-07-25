@@ -2,12 +2,12 @@ import classNames from "classnames";
 import "./user-icon.scss";
 
 const UserIcon = ({
-  imgSrc,
-  userName,
+  imgSrc = "",
+  userName = "",
   show,
 }: {
-  imgSrc: string;
-  userName: string;
+  imgSrc?: string;
+  userName?: string;
   show: boolean;
 }) => {
   return (

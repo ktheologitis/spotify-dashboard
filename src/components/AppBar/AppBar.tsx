@@ -12,8 +12,8 @@ const AppBar = () => {
       <Logo />
       <h1 className="app-title">RUBIN</h1>
       <UserIcon
-        imgSrc={user ? user.image_path : ""}
-        userName={user ? user.name : ""}
+        imgSrc={user?.image_path}
+        userName={user?.name}
         show={user ? true : false}
       />
     </header>
