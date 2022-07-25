@@ -4,13 +4,20 @@ import "./icon-button.scss";
 const IconButton = ({
   iconSrc,
   style,
+  handleClick,
 }: {
   iconSrc: string;
   style: IconButtonStyles;
+  handleClick?: () => void;
 }) => {
   return (
     <button className={style}>
-      <img src={iconSrc} className="icon" alt="icon" />
+      <img
+        src={iconSrc}
+        className="icon"
+        alt="icon"
+        onClick={handleClick}
+      />
     </button>
   );
 };

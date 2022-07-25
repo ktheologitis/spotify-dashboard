@@ -34,7 +34,7 @@
     transform: scale(1.02);
   }
 
-  &--selected {
+  &--selected .song-card__image {
     outline: solid 0.2rem $spotify-green;
   }
 }

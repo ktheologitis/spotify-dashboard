@@ -11,11 +11,24 @@ const theme = createTheme({
   },
 });
 
-const SliderInput = () => {
+const SliderInput = ({
+  handleChange,
+  currentValue,
+}: {
+  currentValue: number;
+  handleChange: (newValue: number) => void;
+}) => {
   return (
     <ThemeProvider theme={theme}>
       <div className="slider-input">
-        <Slider min={0} max={100} />
+        <Slider
+          min={0}
+          max={100}
+          value={currentValue}
+          onChange={(e: Event, newValue) => {
+            handleChange(newValue as any);
+          }}
+        />
       </div>
     </ThemeProvider>
   );

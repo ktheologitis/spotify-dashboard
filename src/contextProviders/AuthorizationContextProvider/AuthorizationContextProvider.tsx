@@ -1,18 +1,17 @@
 import React, { useState } from "react";
 
-const initialToken = "";
 export const AuthContext = React.createContext({
-  token: initialToken,
+  token: "",
   updateToken: (newToken: string) => {},
 });
 
-const ContextProvider = ({
+const AuthorizationContextProvider = ({
   children,
 }: {
   children: React.ReactNode;
 }) => {
   const [auth, setAuth] = useState({
-    token: initialToken,
+    token: "",
     updateToken,
   });
 
@@ -27,4 +26,4 @@ const ContextProvider = ({
   );
 };
 
-export default ContextProvider;
+export default AuthorizationContextProvider;

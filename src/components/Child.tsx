@@ -1,6 +1,6 @@
 import { useContext, useEffect } from "react";
-import { AuthContext } from "./ContextProvider";
-import { getMyData } from "../lib/api";
+import { AuthContext } from "../contextProviders/AuthorizationContextProvider/AuthorizationContextProvider";
+import { getUserData } from "../lib/api";
 import { getTokenFromUrl } from "../lib/helpers";
 import { CLIENT_ID, SCOPE, REDIRECT_CALLBACK } from "../config";
 
@@ -11,7 +11,7 @@ const Child = () => {
   const me = useQuery(
     ["myData", auth.token],
     () => {
-      return getMyData(auth.token);
+      return getUserData(auth.token);
     },
     {
       staleTime: Infinity,

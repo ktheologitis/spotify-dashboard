@@ -10,9 +10,11 @@ const FilterSection = ({
   type,
   title,
   filter,
+  featureValue,
 }: {
   type: Filters;
   title: string;
+  featureValue?: number | null;
   filter: JSX.Element;
 }) => {
   const iconButtons = (
@@ -39,7 +41,8 @@ const FilterSection = ({
 
   const audioFeaturesHeaderContent = (
     <div className="audio-feature-value">
-      Value<span> %</span>
+      {featureValue ? featureValue.toString() : ""}
+      <span> %</span>
     </div>
   );
 
@@ -53,8 +56,6 @@ const FilterSection = ({
         {type === Filters.AudioFeature &&
           audioFeaturesHeaderContent}
       </header>
-      (title = "Genres" ? "entity-section__main--genres" :
-      "entity-section__main")
       <main
         className={classNames({
           "entity-section__main":

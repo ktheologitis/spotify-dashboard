@@ -7,10 +7,12 @@ const Dialog = ({
   header,
   message,
   buttonLabel,
+  handleClick,
 }: {
   header?: string;
   message?: string | JSX.Element;
   buttonLabel: string;
+  handleClick?: () => void;
 }) => {
   return (
     <div className="overlay">
@@ -28,6 +30,7 @@ const Dialog = ({
           <Button
             label={buttonLabel}
             style={ButtonStyles.Primary}
+            handleClick={handleClick}
           />
         </footer>
       </section>
