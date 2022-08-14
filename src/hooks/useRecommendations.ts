@@ -11,7 +11,7 @@ export const useRecomendations = () => {
   const auth = useContext(AuthContext);
   const filters = useContext(FiltersContext);
 
-  const recommendations = useQuery(
+  useQuery(
     ["recommendations", filters.data],
     () => {
       if (filters.data) {
@@ -20,16 +20,13 @@ export const useRecomendations = () => {
     },
     {
       staleTime: Infinity,
+      onSuccess(data) {
+        if (data.tracks) {
+          setData(transformToLocalSongType(data.tracks));
+        }
+      },
     }
   );
-
-  useEffect(() => {
-    if (recommendations.data?.tracks) {
-      setData(
-        transformToLocalSongType(recommendations.data.tracks)
-      );
-    }
-  }, [recommendations.data]);
 
   return data;
 };
