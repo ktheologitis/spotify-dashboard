@@ -1,35 +1,26 @@
 import React, { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+
 import ArtistCard from "../../components/ArtistCard/ArtistCard";
 import FilterSection from "../../components/FilterSection/FilterSection";
 import SongCard from "../../components/SongCard/SongCard";
 import Chip from "../../components/Chip/Chip";
 import IconButton from "../../components/IconButton/IconButton";
 import SliderInput from "../../components/SliderInput/SliderInput";
-import { Filters, IconButtonStyles } from "../../lib/enums";
-import okIcon from "../../static/icons/ok.svg";
 import "./filter-page.scss";
-import { useNavigate } from "react-router-dom";
+
 import { UserDataContext } from "../../contextProviders/UserDataContextProvider";
-import { useQuery } from "@tanstack/react-query";
-import { getGenres } from "../../lib/api";
-import { AuthContext } from "../../contextProviders/AuthorizationContextProvider";
 import { FiltersContext } from "../../contextProviders/FiltersContextProvider";
 import { FilterState, useFilter } from "../../hooks/useFilter";
+import { Filters, IconButtonStyles } from "../../lib/enums";
+import okIcon from "../../static/icons/ok.svg";
+import { useGenres } from "../../hooks/useGenres";
 
 const FilterPage = () => {
   const navigate = useNavigate();
-  const auth = useContext(AuthContext);
   const user = useContext(UserDataContext);
   const filters = useContext(FiltersContext);
-  const genreData = useQuery(
-    ["genres"],
-    () => {
-      return getGenres(auth.token);
-    },
-    {
-      staleTime: Infinity,
-    }
-  );
+  const genreData = useGenres();
 
   let artists;
   let songs;
