@@ -1,6 +1,6 @@
 import React from "react";
-import { useUserData } from "../../hooks/useUserData";
-import { Nullable, User } from "../../lib/types";
+import { useUserData } from "../hooks/useUserData";
+import { Nullable, User } from "../lib/types";
 
 export const UserDataContext =
   React.createContext<Nullable<User>>(null);

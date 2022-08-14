@@ -9,11 +9,11 @@ import { Filters, IconButtonStyles } from "../../lib/enums";
 import okIcon from "../../static/icons/ok.svg";
 import "./filter-page.scss";
 import { useNavigate } from "react-router-dom";
-import { UserDataContext } from "../../contextProviders/UserDataContextProvider/UserDataContextProvider";
+import { UserDataContext } from "../../contextProviders/UserDataContextProvider";
 import { useQuery } from "@tanstack/react-query";
 import { getGenres } from "../../lib/api";
-import { AuthContext } from "../../contextProviders/AuthorizationContextProvider/AuthorizationContextProvider";
-import { FiltersContext } from "../../contextProviders/FiltersContextProvider/FiltersContextProvider";
+import { AuthContext } from "../../contextProviders/AuthorizationContextProvider";
+import { FiltersContext } from "../../contextProviders/FiltersContextProvider";
 import { FilterState, useFilter } from "../../hooks/useFilter";
 
 const FilterPage = () => {
@@ -30,6 +30,7 @@ const FilterPage = () => {
       staleTime: Infinity,
     }
   );
+
   let artists;
   let songs;
   let genres;
@@ -46,7 +47,7 @@ const FilterPage = () => {
     filters.data?.danceability
   );
 
-  const handleFilter = (
+  const handleSelectionFilter = (
     filter: FilterState<string[] | null>,
     selected: string
   ) => {
@@ -61,7 +62,7 @@ const FilterPage = () => {
       : filter.set([selected]);
   };
 
-  const handleNumberFilter = (
+  const handleRangeFilter = (
     filter: FilterState<number | null>,
     value: number
   ) => {
@@ -81,7 +82,10 @@ const FilterPage = () => {
                   artist.id
                 )}
                 handleClick={() => {
-                  handleFilter(artistsFilter, artist.id);
+                  handleSelectionFilter(
+                    artistsFilter,
+                    artist.id
+                  );
                 }}
               />
             </React.Fragment>
@@ -102,7 +106,7 @@ const FilterPage = () => {
                 selectable={true}
                 selected={songsFilter.data?.includes(song.id)}
                 handleClick={() => {
-                  handleFilter(songsFilter, song.id);
+                  handleSelectionFilter(songsFilter, song.id);
                 }}
               />
             </React.Fragment>
@@ -124,7 +128,7 @@ const FilterPage = () => {
                   label={genre}
                   selected={genresFilter.data?.includes(genre)}
                   handleClick={() => {
-                    handleFilter(genresFilter, genre);
+                    handleSelectionFilter(genresFilter, genre);
                   }}
                 />
               </React.Fragment>
@@ -164,7 +168,7 @@ const FilterPage = () => {
                   : 0
               }
               handleChange={(newValue) => {
-                handleNumberFilter(acousticnessFilter, newValue);
+                handleRangeFilter(acousticnessFilter, newValue);
               }}
             />
           </div>
@@ -181,7 +185,7 @@ const FilterPage = () => {
                 valenceFilter.data ? valenceFilter.data : 0
               }
               handleChange={(newValue) => {
-                handleNumberFilter(valenceFilter, newValue);
+                handleRangeFilter(valenceFilter, newValue);
               }}
             />
           </div>
@@ -200,7 +204,7 @@ const FilterPage = () => {
                   : 0
               }
               handleChange={(newValue) => {
-                handleNumberFilter(danceabilityFilter, newValue);
+                handleRangeFilter(danceabilityFilter, newValue);
               }}
             />
           </div>
@@ -216,7 +220,7 @@ const FilterPage = () => {
               loudnessFilter.data ? loudnessFilter.data : 0
             }
             handleChange={(newValue) => {
-              handleNumberFilter(loudnessFilter, newValue);
+              handleRangeFilter(loudnessFilter, newValue);
             }}
           />
         }

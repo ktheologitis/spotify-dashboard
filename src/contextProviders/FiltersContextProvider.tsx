@@ -1,22 +1,19 @@
 import React, { useState } from "react";
-import { Filters, Nullable } from "../../lib/types";
+import { Filters, Nullable } from "../lib/types";
 
-const initialFilterData: FilterContextData = {
-  data: null,
-  update: (newFilters: Filters) => {},
-};
-
-export const FiltersContext = React.createContext(
-  initialFilterData
-);
+export const FiltersContext =
+  React.createContext<FilterContextData>({
+    data: null,
+    update: (newFilters: Filters) => {},
+  });
 
 const FiltersContextProvider = ({
   children,
 }: {
   children: React.ReactNode;
 }) => {
-  const [filters, setFilters] = useState({
-    data: initialFilterData.data,
+  const [filters, setFilters] = useState<FilterContextData>({
+    data: null,
     update,
   });
 

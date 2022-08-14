@@ -2,7 +2,7 @@ import { useContext } from "react";
 import Logo from "../Logo/Logo";
 import UserIcon from "../UserIcon/UserIcon";
 import "./app-bar.scss";
-import { UserDataContext } from "../../contextProviders/UserDataContextProvider/UserDataContextProvider";
+import { UserDataContext } from "../../contextProviders/UserDataContextProvider";
 
 const AppBar = () => {
   const user = useContext(UserDataContext);

@@ -10,9 +10,11 @@
   border: 0.2rem solid $spotify-green;
   border-radius: 500px;
 
-  &:hover,
+  &:hover {
+    cursor: pointer;
+  }
+
   &--selected {
     background-color: $spotify-green;
-    cursor: pointer;
   }
 }

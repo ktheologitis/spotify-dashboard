@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { useContext, useState } from "react";
-import { AuthContext } from "../contextProviders/AuthorizationContextProvider/AuthorizationContextProvider";
+import { AuthContext } from "../contextProviders/AuthorizationContextProvider";
 import {
   getUserData,
   getUserTopArtists,

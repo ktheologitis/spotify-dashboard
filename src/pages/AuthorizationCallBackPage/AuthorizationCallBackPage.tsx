@@ -1,6 +1,6 @@
 import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../../contextProviders/AuthorizationContextProvider/AuthorizationContextProvider";
+import { AuthContext } from "../../contextProviders/AuthorizationContextProvider";
 import { getTokenFromUrl } from "../../lib/helpers";
 
 const AuthorizationCallBackPage = () => {

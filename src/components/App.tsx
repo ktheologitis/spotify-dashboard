@@ -1,27 +1,19 @@
-import {
-  QueryClient,
-  QueryClientProvider,
-} from "@tanstack/react-query";
-import AuthorizationContextProvider from "../contextProviders/AuthorizationContextProvider/AuthorizationContextProvider";
-import FiltersContextProvider from "../contextProviders/FiltersContextProvider/FiltersContextProvider";
-import UserDataContextProvider from "../contextProviders/UserDataContextProvider/UserDataContextProvider";
+import { useContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../contextProviders/AuthorizationContextProvider";
 import Routing from "../Routing";
 import "../stylesheets/global.scss";
 
 function App() {
-  const queryClient = new QueryClient();
+  const navigate = useNavigate();
+  const auth = useContext(AuthContext);
 
-  return (
-    <QueryClientProvider client={queryClient}>
-      <AuthorizationContextProvider>
-        <UserDataContextProvider>
-          <FiltersContextProvider>
-            <Routing />
-          </FiltersContextProvider>
-        </UserDataContextProvider>
-      </AuthorizationContextProvider>
-    </QueryClientProvider>
-  );
+  useEffect(() => {
+    if (auth.token) navigate("./recommendations");
+    else navigate("./authorize");
+  }, [auth.token]);
+
+  return <Routing />;
 }
 
 export default App;

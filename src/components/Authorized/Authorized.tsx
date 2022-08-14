@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { AuthContext } from "../../contextProviders/AuthorizationContextProvider/AuthorizationContextProvider";
+import { AuthContext } from "../../contextProviders/AuthorizationContextProvider";
 import UnauthorizedDialog from "../UnauthorizedDialog/UnauthorizedDialog";
 
 const Authorized = ({

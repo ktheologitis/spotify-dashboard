@@ -11,13 +11,8 @@ const IconButton = ({
   handleClick?: () => void;
 }) => {
   return (
-    <button className={style}>
-      <img
-        src={iconSrc}
-        className="icon"
-        alt="icon"
-        onClick={handleClick}
-      />
+    <button className={style} onClick={handleClick}>
+      <img src={iconSrc} className="icon" alt="icon" />
     </button>
   );
 };

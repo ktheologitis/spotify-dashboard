@@ -59,7 +59,7 @@ export async function getRecommendations(
   token: string,
   filters: Filters
 ) {
-  const offset = 20;
+  const offset = 10;
   const params = {
     seed_artists: filters.artists.join(","),
     seed_genres: filters.genres.join(","),
@@ -86,8 +86,6 @@ export async function getRecommendations(
       offset
     ),
   };
-
-  console.log(params);
 
   const response: AxiosResponse = await axios.get(
     "recommendations",

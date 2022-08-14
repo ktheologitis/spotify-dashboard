@@ -4,7 +4,7 @@
   display: inline-flex;
   align-items: center;
   gap: 0.8rem;
-  max-width: 150px;
+  width: 11rem;
   background-color: black;
   height: 2.5rem;
   border: none;
@@ -14,10 +14,8 @@
   &__image {
     border-radius: 50%;
     background-color: $spotify-green;
-    min-width: 2.5rem;
     max-width: 2.5rem;
-    height: 100%;
-    width: 100%;
+    aspect-ratio: 1 / 1;
     object-fit: cover;
     overflow: hidden;
   }
@@ -38,10 +36,8 @@
 @media screen and (min-width: 768px) {
   .user-icon {
     height: 3.5rem;
-    max-width: 200px;
 
     &__image {
-      min-width: 3.5rem;
       max-width: 3.5rem;
     }
 

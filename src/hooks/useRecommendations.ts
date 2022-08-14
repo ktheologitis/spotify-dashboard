@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../contextProviders/AuthorizationContextProvider/AuthorizationContextProvider";
-import { FiltersContext } from "../contextProviders/FiltersContextProvider/FiltersContextProvider";
+import { AuthContext } from "../contextProviders/AuthorizationContextProvider";
+import { FiltersContext } from "../contextProviders/FiltersContextProvider";
 import { getRecommendations } from "../lib/api";
 import { transformToLocalSongType } from "../lib/helpers";
 import { Nullable, Song } from "../lib/types";
