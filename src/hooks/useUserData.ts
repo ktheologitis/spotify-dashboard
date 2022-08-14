@@ -17,12 +17,13 @@ export const useUserData = () => {
 
   const [user, setUser] = useState<Nullable<User>>(null);
 
-  useQuery(
+  const userQuery = useQuery(
     ["user", auth.token],
     () => {
       return getUserData(auth.token);
     },
     {
+      enabled: auth.token !== "",
       staleTime: Infinity,
       onSuccess: (data) => {
         setUser({
@@ -45,6 +46,7 @@ export const useUserData = () => {
       return getUserTopSongs(auth.token);
     },
     {
+      enabled: userQuery.status === "success",
       staleTime: Infinity,
       onSuccess: (data) => {
         if (user) {
@@ -63,6 +65,7 @@ export const useUserData = () => {
       return getUserTopArtists(auth.token);
     },
     {
+      enabled: userQuery.status === "success",
       staleTime: Infinity,
       onSuccess: (data) => {
         if (user) {

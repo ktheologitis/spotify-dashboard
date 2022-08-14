@@ -14,11 +14,6 @@ function getHeaders(token: string) {
 export async function getUserData(token: string) {
   const response: AxiosResponse = await axios.get("/me", {
     headers: getHeaders(token),
-    // params: {
-    //   seed_artists: "4NHQUGzhtTLFvgF5SZesLK",
-    //   seed_genres: "classical",
-    //   seed_tracks: "0c6xIDDpzE81m2q797ordA",
-    // },
   });
   return response.data;
 }

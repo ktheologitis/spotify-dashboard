@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../contextProviders/AuthorizationContextProvider";
 import { FiltersContext } from "../contextProviders/FiltersContextProvider";
 import { getRecommendations } from "../lib/api";
