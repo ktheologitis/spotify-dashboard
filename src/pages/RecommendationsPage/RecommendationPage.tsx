@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useCallback, useContext } from "react";
 import IconButton from "../../components/IconButton/IconButton";
 import SongCard from "../../components/SongCard/SongCard";
 import { IconButtonStyles } from "../../lib/enums";
@@ -16,6 +16,10 @@ const RecommendationsPage = () => {
   let default_songs;
   let recommendations;
 
+  const handleOpenOnSpotify = useCallback((url: string) => {
+    window.open(url, "_blank");
+  }, []);
+
   if (recommendationData) {
     recommendations = (
       <>
@@ -23,12 +27,12 @@ const RecommendationsPage = () => {
           return (
             <React.Fragment key={song.id}>
               <SongCard
-                imgSrc={song.images.medium}
+                id={song.id}
                 name={song.name}
+                img={song.images.medium}
+                url={song.external_url}
                 album={song.album}
-                handleClick={() => {
-                  window.open(song.external_url, "_blank");
-                }}
+                handleOpenOnSpotify={handleOpenOnSpotify}
               />
             </React.Fragment>
           );
@@ -44,12 +48,12 @@ const RecommendationsPage = () => {
           return (
             <React.Fragment key={song.id}>
               <SongCard
-                imgSrc={song.images.medium}
+                id={song.id}
+                img={song.images.medium}
                 name={song.name}
+                url={song.external_url}
                 album={song.album}
-                handleClick={() => {
-                  window.open(song.external_url, "_blank");
-                }}
+                handleOpenOnSpotify={handleOpenOnSpotify}
               />
             </React.Fragment>
           );
@@ -65,7 +69,7 @@ const RecommendationsPage = () => {
           Recommendations
         </h1>
       </header>
-      <section className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-7 mt-5">
+      <section className="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-6 2xl:grid-cols-8 gap-7 mt-5">
         {recommendations ? recommendations : default_songs}
       </section>
       <section className="filter-icon-button">

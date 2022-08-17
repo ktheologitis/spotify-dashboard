@@ -1,7 +1,13 @@
-import "./input.scss";
 import searchIcon from "../../static/icons/search.svg";
+import "./input.scss";
 
-const Input = ({ label }: { label: string }) => {
+const Input = ({
+  label,
+  handleChange,
+}: {
+  label: string;
+  handleChange: (value: string) => void;
+}) => {
   return (
     <div className="input-container">
       <label
@@ -15,7 +21,10 @@ const Input = ({ label }: { label: string }) => {
         placeholder={label}
         name="spotify-input"
         type="text"
-      ></input>
+        onChange={(e) => {
+          handleChange(e.target.value);
+        }}
+      />
     </div>
   );
 };

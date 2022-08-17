@@ -1,28 +1,22 @@
 import classNames from "classnames";
-import { useState } from "react";
 import "./chip.scss";
 
 const Chip = ({
   label,
-  selected,
+  isSelected,
   handleClick,
 }: {
   label: string;
-  selected?: boolean | undefined;
-  handleClick: () => void;
+  isSelected?: boolean;
+  handleClick: (genre: string) => void;
 }) => {
-  const [isSelected, setSelected] = useState(
-    selected ? selected : false
-  );
-
   return (
     <div
       className={classNames("chip", {
         "chip--selected": isSelected,
       })}
       onClick={() => {
-        setSelected(!isSelected);
-        handleClick();
+        handleClick(label);
       }}
     >
       {label}

@@ -1,36 +1,28 @@
 import { Slider } from "@mui/material";
-import {
-  createTheme,
-  ThemeProvider,
-} from "@mui/material/styles";
+import { Nullable } from "../../lib/types";
 import "./slider-input.scss";
 
-const theme = createTheme({
-  palette: {
-    primary: { main: "#1db954" },
-  },
-});
-
 const SliderInput = ({
-  handleChange,
   currentValue,
+  enabled,
+  handleChange,
 }: {
-  currentValue: number;
+  currentValue: Nullable<number>;
+  enabled: boolean;
   handleChange: (newValue: number) => void;
 }) => {
   return (
-    <ThemeProvider theme={theme}>
-      <div className="slider-input">
-        <Slider
-          min={0}
-          max={100}
-          value={currentValue}
-          onChange={(e: Event, newValue) => {
-            handleChange(newValue as any);
-          }}
-        />
-      </div>
-    </ThemeProvider>
+    <div className="slider-input">
+      <Slider
+        min={0}
+        max={100}
+        disabled={!enabled}
+        value={currentValue ?? 0}
+        onChange={(e: Event, newValue) => {
+          handleChange(newValue as any);
+        }}
+      />
+    </div>
   );
 };
 

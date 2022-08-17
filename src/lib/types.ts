@@ -11,14 +11,19 @@ export type User = {
   topArtists: Nullable<Artist[]>;
 };
 
+export type AudioFeatureData = {
+  enabled: boolean;
+  value: Nullable<number>;
+};
+
 export type Filters = {
-  artists: string[];
-  songs: string[];
-  genres: string[];
-  acousticness: Nullable<number>;
-  valence: Nullable<number>;
-  danceability: Nullable<number>;
-  loudness: Nullable<number>;
+  artists: Nullable<string[]>;
+  songs: Nullable<string[]>;
+  genres: Nullable<string[]>;
+  acousticness: AudioFeatureData;
+  valence: AudioFeatureData;
+  danceability: AudioFeatureData;
+  loudness: AudioFeatureData;
 };
 
 export type Song = {

@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { AuthContext } from "../../contextProviders/AuthorizationContextProvider";
 import UnauthorizedDialog from "../UnauthorizedDialog/UnauthorizedDialog";
 
-const Authorized = ({
+const AuthorizedUser = ({
   children,
 }: {
   children: React.ReactNode;
@@ -12,4 +12,4 @@ const Authorized = ({
   return <>{auth.token ? children : <UnauthorizedDialog />}</>;
 };
 
-export default Authorized;
+export default AuthorizedUser;

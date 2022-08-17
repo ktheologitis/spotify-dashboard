@@ -1,38 +1,38 @@
 import classNames from "classnames";
-import { useState } from "react";
+import React from "react";
 import "./song-card.scss";
 
 const SongCard = ({
-  imgSrc,
+  id,
   name,
   album,
-  selectable = false,
-  selected = false,
+  img,
+  url,
+  isSelected = false,
   handleClick,
+  handleOpenOnSpotify,
 }: {
-  imgSrc: string;
+  id: string;
   name: string;
   album: string;
-  selectable?: boolean;
-  selected?: boolean | undefined;
-  handleClick?: () => void;
+  img: string;
+  url?: string;
+  isSelected?: boolean;
+  handleClick?: (id: string) => void;
+  handleOpenOnSpotify?: (url: string) => void;
 }) => {
-  const [isSelected, setIsSelected] = useState(
-    selected ? selected : false
-  );
-
   return (
     <article
       className={classNames("song-card", {
         "song-card--selected": isSelected,
       })}
       onClick={() => {
-        selectable && setIsSelected(!isSelected);
-        handleClick && handleClick();
+        handleClick && handleClick(id);
+        handleOpenOnSpotify && url && handleOpenOnSpotify(url);
       }}
     >
       <section className="song-card__image">
-        <img src={imgSrc} alt="song-pic" />
+        <img src={img} alt="song-pic" />
       </section>
       <header className="song-card__name">{name}</header>
       <p className="song-card__album">{album}</p>
@@ -40,4 +40,4 @@ const SongCard = ({
   );
 };
 
-export default SongCard;
+export default React.memo(SongCard);

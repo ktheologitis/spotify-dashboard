@@ -1,4 +1,4 @@
-@import "../../stylesheets/variables";
+@import "./variables";
 
 .entity-section {
   margin-top: 2.4rem;
@@ -19,7 +19,6 @@
     }
 
     .audio-feature-value {
-      background-color: black;
       font-family: $app-font-bold;
       font-size: 1.6rem;
       color: white;

@@ -5,6 +5,7 @@
   flex-direction: column;
   align-items: flex-start;
   min-width: 10rem;
+  // max-width: 10rem;
   font-family: $app-font-semibold;
   color: white;
 
@@ -42,6 +43,7 @@
 @media screen and (min-width: 768px) {
   .song-card {
     min-width: 15rem;
+    // max-width: auto;
     font-size: 1.2rem;
   }
 }
@@ -49,6 +51,7 @@
 @media screen and (min-width: 1024px) {
   .song-card {
     min-width: 18rem;
+    // max-width: auto;
     font-size: 1.6rem;
   }
 }

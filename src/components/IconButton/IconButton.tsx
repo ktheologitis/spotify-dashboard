@@ -1,3 +1,4 @@
+import React from "react";
 import { IconButtonStyles } from "../../lib/enums";
 import "./icon-button.scss";
 
@@ -17,4 +18,4 @@ const IconButton = ({
   );
 };
 
-export default IconButton;
+export default React.memo(IconButton);

@@ -22,7 +22,7 @@ export async function getUserTopSongs(token: string) {
   const response: AxiosResponse = await axios.get(
     "me/top/tracks",
     {
-      params: { limit: 20 },
+      params: { limit: 50 },
       headers: getHeaders(token),
     }
   );
@@ -33,7 +33,7 @@ export async function getUserTopArtists(token: string) {
   const response: AxiosResponse = await axios.get(
     "me/top/artists",
     {
-      params: { limit: 10 },
+      params: { limit: 50 },
       headers: getHeaders(token),
     }
   );
@@ -50,36 +50,52 @@ export async function getGenres(token: string) {
   return response.data;
 }
 
+export async function search(
+  token: string,
+  type: string,
+  value: string
+) {
+  const response: AxiosResponse = await axios.get("search", {
+    params: { q: value, type: type, limit: 10 },
+    headers: getHeaders(token),
+  });
+  return response.data;
+}
+
 export async function getRecommendations(
   token: string,
   filters: Filters
 ) {
   const offset = 10;
   const params = {
-    seed_artists: filters.artists.join(","),
-    seed_genres: filters.genres.join(","),
-    seed_tracks: filters.songs.join(","),
+    seed_artists: filters.artists?.join(","),
+    seed_genres: filters.genres?.join(","),
+    seed_tracks: filters.songs?.join(","),
     limit: 20,
-    max_acousticness: getAudioFeatureMax(
-      filters.acousticness,
-      offset
-    ),
-    min_acousticness: getAudioFeatureMin(
-      filters.acousticness,
-      offset
-    ),
-    max_valence: getAudioFeatureMax(filters.valence, offset),
-    min_valence: getAudioFeatureMin(filters.valence, offset),
-    max_loudness: getAudioFeatureMax(filters.loudness, offset),
-    min_loudness: getAudioFeatureMin(filters.loudness, offset),
-    max_danceability: getAudioFeatureMax(
-      filters.danceability,
-      offset
-    ),
-    min_danceability: getAudioFeatureMin(
-      filters.danceability,
-      offset
-    ),
+    max_acousticness: filters.acousticness.enabled
+      ? getAudioFeatureMax(filters.acousticness.value, offset)
+      : null,
+    min_acousticness: filters.acousticness.enabled
+      ? getAudioFeatureMin(filters.acousticness.value, offset)
+      : null,
+    max_valence: filters.valence.enabled
+      ? getAudioFeatureMax(filters.valence.value, offset)
+      : null,
+    min_valence: filters.valence.enabled
+      ? getAudioFeatureMin(filters.valence.value, offset)
+      : null,
+    max_loudness: filters.loudness.enabled
+      ? getAudioFeatureMax(filters.loudness.value, offset)
+      : null,
+    min_loudness: filters.loudness.enabled
+      ? getAudioFeatureMin(filters.loudness.value, offset)
+      : null,
+    max_danceability: filters.danceability.enabled
+      ? getAudioFeatureMax(filters.danceability.value, offset)
+      : null,
+    min_danceability: filters.loudness.enabled
+      ? getAudioFeatureMin(filters.danceability.value, offset)
+      : null,
   };
 
   const response: AxiosResponse = await axios.get(

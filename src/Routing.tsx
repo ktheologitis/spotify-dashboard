@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router-dom";
-import Authorized from "./components/Authorized/Authorized";
+import AuthorizedUser from "./components/Authorized/AuthorizedUser";
 import Layout from "./components/Layout/Layout";
 import AuthorizationCallBackPage from "./pages/AuthorizationCallBackPage/AuthorizationCallBackPage";
 import AuthorizationPage from "./pages/AuthorizationPage/AuthorizarionPage";
@@ -21,17 +21,17 @@ const Routing = () => {
         <Route
           path="/recommendations"
           element={
-            <Authorized>
+            <AuthorizedUser>
               <RecommendationsPage />
-            </Authorized>
+            </AuthorizedUser>
           }
         />
         <Route
           path="/filter"
           element={
-            <Authorized>
+            <AuthorizedUser>
               <FilterPage />
-            </Authorized>
+            </AuthorizedUser>
           }
         />
       </Route>

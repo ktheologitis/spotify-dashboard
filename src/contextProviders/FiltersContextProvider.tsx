@@ -1,10 +1,24 @@
 import React, { useState } from "react";
-import { Filters, Nullable } from "../lib/types";
+import { FilterTypes } from "../lib/enums";
+import { AudioFeatureData, Filters } from "../lib/types";
+
+const initialFilters: Filters = {
+  artists: null,
+  songs: null,
+  genres: null,
+  acousticness: { enabled: false, value: null },
+  valence: { enabled: false, value: null },
+  danceability: { enabled: false, value: null },
+  loudness: { enabled: false, value: null },
+};
 
 export const FiltersContext =
   React.createContext<FilterContextData>({
-    data: null,
-    update: (newFilters: Filters) => {},
+    data: initialFilters,
+    update: (
+      filterType: FilterTypes,
+      data: string[] | AudioFeatureData
+    ) => {},
   });
 
 const FiltersContextProvider = ({
@@ -13,12 +27,20 @@ const FiltersContextProvider = ({
   children: React.ReactNode;
 }) => {
   const [filters, setFilters] = useState<FilterContextData>({
-    data: null,
+    data: initialFilters,
     update,
   });
 
-  function update(newFilters: Filters) {
-    setFilters({ ...filters, data: newFilters });
+  function update(
+    filterType: FilterTypes,
+    data: string[] | AudioFeatureData
+  ) {
+    setFilters((filters) => {
+      return {
+        ...filters,
+        data: { ...filters.data, [filterType]: data },
+      };
+    });
   }
 
   return (
@@ -30,7 +52,10 @@ const FiltersContextProvider = ({
 
 export default FiltersContextProvider;
 
-type FilterContextData = {
-  data: Nullable<Filters>;
-  update: (newFilters: Filters) => void;
+export type FilterContextData = {
+  data: Filters;
+  update: (
+    filterType: FilterTypes,
+    data: string[] | AudioFeatureData
+  ) => void;
 };
