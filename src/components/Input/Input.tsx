@@ -8,7 +8,7 @@ const Input = ({ label }: { label: string }) => {
         className="input-container__icon"
         htmlFor="spotify-input"
       >
-        <img src={searchIcon} alt="search" />
+        <img src={searchIcon} alt="search" loading="lazy" />
       </label>
       <input
         className="input-container__input"
