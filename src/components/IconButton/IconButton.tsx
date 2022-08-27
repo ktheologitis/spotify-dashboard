@@ -12,7 +12,12 @@ const IconButton = ({
 }) => {
   return (
     <button className={style} onClick={handleClick}>
-      <img src={iconSrc} className="icon" alt="icon" />
+      <img
+        src={iconSrc}
+        className="icon"
+        alt="icon"
+        loading="lazy"
+      />
     </button>
   );
 };

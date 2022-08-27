@@ -20,6 +20,7 @@ const UserIcon = ({
         src={imgSrc}
         className="user-icon__image"
         alt="profile-pic"
+        loading="lazy"
       />
       <p className="user-icon__name">{userName}</p>
     </div>

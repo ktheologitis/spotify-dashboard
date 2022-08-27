@@ -32,7 +32,7 @@ const SongCard = ({
       }}
     >
       <section className="song-card__image">
-        <img src={imgSrc} alt="song-pic" />
+        <img src={imgSrc} alt="song-pic" loading="lazy" />
       </section>
       <header className="song-card__name">{name}</header>
       <p className="song-card__album">{album}</p>

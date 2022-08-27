@@ -28,7 +28,7 @@ const ArtistCard = ({
       }}
     >
       <div className="artist-card__image">
-        <img src={imgSrc} alt="artist-pic" />
+        <img src={imgSrc} alt="artist-pic" loading="lazy" />
       </div>
       <header className="artist-card__name">{name}</header>
     </article>
