@@ -11,10 +11,10 @@ const Input = ({ label }: { label: string }) => {
         <img src={searchIcon} alt="search" loading="lazy" />
       </label>
       <input
+        type="search"
         className="input-container__input"
         placeholder={label}
         name="spotify-input"
-        type="text"
       ></input>
     </div>
   );

@@ -1,32 +1,30 @@
 import { useQuery } from "@tanstack/react-query";
-import { useContext, useState } from "react";
-import { AuthContext } from "../contextProviders/AuthorizationContextProvider";
-import { FiltersContext } from "../contextProviders/FiltersContextProvider";
 import { getRecommendations } from "../lib/api";
-import { transformToLocalSongType } from "../lib/helpers";
-import { Nullable, Song } from "../lib/types";
+import { sleep } from "../lib/helpers";
+import {
+  Filters,
+  Nullable,
+  RecommendationsSchema,
+  Song,
+} from "../lib/types";
 
-export const useRecomendations = () => {
-  const [data, setData] = useState<Nullable<Song[]>>(null);
-  const auth = useContext(AuthContext);
-  const filters = useContext(FiltersContext);
-
-  useQuery(
-    ["recommendations", filters.data],
-    () => {
-      if (filters.data) {
-        return getRecommendations(auth.token, filters.data);
-      }
+export const useRecomendations = (
+  authToken: string,
+  filters: Nullable<Filters>
+): Nullable<Song[]> => {
+  const { data } = useQuery(
+    ["recommendations", filters],
+    async () => {
+      await sleep(2000);
+      return getRecommendations(authToken, filters as Filters);
     },
     {
+      enabled: filters != null,
       staleTime: Infinity,
-      onSuccess(data) {
-        if (data.tracks) {
-          setData(transformToLocalSongType(data.tracks));
-        }
-      },
     }
   );
 
-  return data;
+  const parsedData = RecommendationsSchema.safeParse(data);
+
+  return parsedData.success ? parsedData.data.tracks : null;
 };

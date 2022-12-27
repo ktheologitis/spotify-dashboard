@@ -11,7 +11,7 @@ const AuthorizationCallBackPage = () => {
   useEffect(() => {
     if (auth.token !== tokenFromurl) {
       auth.updateToken(tokenFromurl);
-      navigate("/recommendations");
+      navigate("/");
     }
   }, [auth, tokenFromurl, navigate]);
 

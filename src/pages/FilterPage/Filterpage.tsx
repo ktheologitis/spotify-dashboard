@@ -1,42 +1,38 @@
 import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-
+import { useTopArtists } from "../../hooks/useTopArtists";
+import { useTopSongs } from "../../hooks/useTopSongs";
+import { useGenres } from "../../hooks/useGenres";
+import { useUser } from "../../hooks/useUser";
+import { FilterState, useFilter } from "../../hooks/useFilter";
+import { Filters, IconButtonStyles } from "../../lib/enums";
+import { FiltersContext } from "../../contextProviders/FiltersContextProvider";
+import { AuthContext } from "../../contextProviders/AuthorizationContextProvider";
 import ArtistCard from "../../components/ArtistCard/ArtistCard";
 import FilterSection from "../../components/FilterSection/FilterSection";
 import SongCard from "../../components/SongCard/SongCard";
 import Chip from "../../components/Chip/Chip";
 import IconButton from "../../components/IconButton/IconButton";
 import SliderInput from "../../components/SliderInput/SliderInput";
-import "./filter-page.scss";
-
-import { UserDataContext } from "../../contextProviders/UserDataContextProvider";
-import { FiltersContext } from "../../contextProviders/FiltersContextProvider";
-import { FilterState, useFilter } from "../../hooks/useFilter";
-import { Filters, IconButtonStyles } from "../../lib/enums";
 import okIcon from "../../static/icons/ok.svg";
-import { useGenres } from "../../hooks/useGenres";
+import "./filter-page.scss";
 
 const FilterPage = () => {
   const navigate = useNavigate();
-  const user = useContext(UserDataContext);
-  const filters = useContext(FiltersContext);
-  const genreData = useGenres();
+  const auth = useContext(AuthContext);
+  const { filters, update } = useContext(FiltersContext);
+  const user = useUser(auth.token);
+  const topArtists = useTopArtists(auth.token, user?.id);
+  const topSongs = useTopSongs(auth.token, user?.id);
+  const genreData = useGenres(auth.token);
 
-  let artists;
-  let songs;
-  let genres;
-
-  const artistsFilter = useFilter(filters.data?.artists);
-  const songsFilter = useFilter(filters.data?.songs);
-  const genresFilter = useFilter(filters.data?.genres);
-  const loudnessFilter = useFilter(filters.data?.loudness);
-  const valenceFilter = useFilter(filters.data?.valence);
-  const acousticnessFilter = useFilter(
-    filters.data?.acousticness
-  );
-  const danceabilityFilter = useFilter(
-    filters.data?.danceability
-  );
+  const artistsFilter = useFilter(filters?.artists);
+  const songsFilter = useFilter(filters?.songs);
+  const genresFilter = useFilter(filters?.genres);
+  const loudnessFilter = useFilter(filters?.loudness);
+  const valenceFilter = useFilter(filters?.valence);
+  const acousticnessFilter = useFilter(filters?.acousticness);
+  const danceabilityFilter = useFilter(filters?.danceability);
 
   const handleSelectionFilter = (
     filter: FilterState<string[] | null>,
@@ -60,14 +56,18 @@ const FilterPage = () => {
     filter.set(value);
   };
 
-  if (user && user.topArtists && user.topSongs) {
+  let artists;
+  let songs;
+  let genres;
+
+  if (topArtists && topSongs) {
     artists = (
       <>
-        {user.topArtists.map((artist) => {
+        {topArtists.map((artist) => {
           return (
             <React.Fragment key={artist.id}>
               <ArtistCard
-                imgSrc={artist.images.medium}
+                imgSrc={artist.images[1].url}
                 name={artist.name}
                 selected={artistsFilter.data?.includes(
                   artist.id
@@ -87,13 +87,13 @@ const FilterPage = () => {
 
     songs = (
       <>
-        {user.topSongs.slice(0, 10).map((song) => {
+        {topSongs.slice(0, 10).map((song) => {
           return (
             <React.Fragment key={song.id}>
               <SongCard
-                imgSrc={song.images.medium}
+                imgSrc={song.album.images[1].url}
                 name={song.name}
-                album={song.album}
+                album={song.album.name}
                 selectable={true}
                 selected={songsFilter.data?.includes(song.id)}
                 handleClick={() => {
@@ -107,24 +107,22 @@ const FilterPage = () => {
     );
   }
 
-  if (genreData.data && genreData.data.genres) {
+  if (genreData) {
     genres = (
       <>
-        {genreData.data.genres
-          .slice(0, 10)
-          .map((genre: string) => {
-            return (
-              <React.Fragment key={genre}>
-                <Chip
-                  label={genre}
-                  selected={genresFilter.data?.includes(genre)}
-                  handleClick={() => {
-                    handleSelectionFilter(genresFilter, genre);
-                  }}
-                />
-              </React.Fragment>
-            );
-          })}
+        {genreData.slice(0, 10).map((genre: string) => {
+          return (
+            <React.Fragment key={genre}>
+              <Chip
+                label={genre}
+                selected={genresFilter.data?.includes(genre)}
+                handleClick={() => {
+                  handleSelectionFilter(genresFilter, genre);
+                }}
+              />
+            </React.Fragment>
+          );
+        })}
       </>
     );
   }
@@ -226,7 +224,7 @@ const FilterPage = () => {
               songsFilter.data &&
               genresFilter.data
             )
-              filters.update({
+              update({
                 artists: artistsFilter.data,
                 songs: songsFilter.data,
                 genres: genresFilter.data,
@@ -235,7 +233,7 @@ const FilterPage = () => {
                 danceability: danceabilityFilter.data,
                 loudness: loudnessFilter.data,
               });
-            navigate("/recommendations");
+            navigate("/");
           }}
         />
       </section>

@@ -1,6 +1,6 @@
 @import "../../stylesheets/variables";
 
-.entity-section {
+.filter-section {
   margin-top: 2.4rem;
   &__title {
     font-family: $app-font-bold;
@@ -65,7 +65,7 @@
 }
 
 @media screen and (min-width: 768px) {
-  .entity-section {
+  .filter-section {
     &__title {
       font-size: 3.2rem;
     }

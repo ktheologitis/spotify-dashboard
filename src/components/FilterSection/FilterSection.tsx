@@ -47,9 +47,9 @@ const FilterSection = ({
   );
 
   return (
-    <section className="entity-section">
-      <header className="entity-section__header">
-        <h1 className="entity-section__title">{title}</h1>
+    <section className="filter-section">
+      <header className="filter-section__header">
+        <h1 className="filter-section__title">{title}</h1>
         {type === Filters.Artist && standardHeaderContent}
         {type === Filters.Song && standardHeaderContent}
         {type === Filters.Genre && genresHeaderContent}
@@ -58,17 +58,17 @@ const FilterSection = ({
       </header>
       <main
         className={classNames({
-          "entity-section__main":
+          "filter-section__main":
             type === Filters.Artist || type === Filters.Song,
-          "entity-section__main--genres": type === Filters.Genre,
-          "entity-section__main--audio-feature":
+          "filter-section__main--genres": type === Filters.Genre,
+          "filter-section__main--audio-feature":
             type === Filters.AudioFeature,
         })}
       >
         {filter}
       </main>
       {type !== Filters.AudioFeature && (
-        <footer className="entity-section__footer">
+        <footer className="filter-section__footer">
           <em>See selected</em>
         </footer>
       )}

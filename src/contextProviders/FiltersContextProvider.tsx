@@ -3,7 +3,7 @@ import { Filters, Nullable } from "../lib/types";
 
 export const FiltersContext =
   React.createContext<FilterContextData>({
-    data: null,
+    filters: null,
     update: (newFilters: Filters) => {},
   });
 
@@ -13,12 +13,12 @@ const FiltersContextProvider = ({
   children: React.ReactNode;
 }) => {
   const [filters, setFilters] = useState<FilterContextData>({
-    data: null,
+    filters: null,
     update,
   });
 
   function update(newFilters: Filters) {
-    setFilters({ ...filters, data: newFilters });
+    setFilters({ ...filters, filters: newFilters });
   }
 
   return (
@@ -31,6 +31,6 @@ const FiltersContextProvider = ({
 export default FiltersContextProvider;
 
 type FilterContextData = {
-  data: Nullable<Filters>;
+  filters: Nullable<Filters>;
   update: (newFilters: Filters) => void;
 };

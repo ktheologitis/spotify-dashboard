@@ -11,15 +11,7 @@ const Routing = () => {
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route
-          path="/authorize"
-          element={<AuthorizationPage />}
-        />
-        <Route
-          path="/authorize/callback"
-          element={<AuthorizationCallBackPage />}
-        />
-        <Route
-          path="/recommendations"
+          index
           element={
             <Authorized>
               <RecommendationsPage />
@@ -33,6 +25,14 @@ const Routing = () => {
               <FilterPage />
             </Authorized>
           }
+        />
+        <Route
+          path="/authorize"
+          element={<AuthorizationPage />}
+        />
+        <Route
+          path="/authorize/callback"
+          element={<AuthorizationCallBackPage />}
         />
       </Route>
     </Routes>

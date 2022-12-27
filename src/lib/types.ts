@@ -1,15 +1,66 @@
+import { z } from "zod";
+
+export const UserSchema = z.object({
+  id: z.string(),
+  country: z.string(),
+  display_name: z.string(),
+  email: z.string().email(),
+  uri: z.string(),
+  images: z.array(z.object({ url: z.string() })),
+});
+
+export const SongSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  external_urls: z.object({ spotify: z.string() }),
+  album: z.object({
+    name: z.string(),
+    images: z.array(
+      z.object({
+        height: z.number(),
+        width: z.number(),
+        url: z.string(),
+      })
+    ),
+  }),
+});
+
+export const TopSongsSchema = z.object({
+  items: z.array(SongSchema),
+});
+
+export const RecommendationsSchema = z.object({
+  tracks: z.array(SongSchema),
+});
+
+export const ArtistSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  external_urls: z.object({ spotify: z.string() }),
+  images: z.array(
+    z.object({
+      height: z.number(),
+      width: z.number(),
+      url: z.string(),
+    })
+  ),
+});
+
+export const TopArtistsSchema = z.object({
+  items: z.array(ArtistSchema),
+});
+
+export const GenresSchema = z.object({
+  genres: z.array(z.string()),
+});
+
 export type Nullable<T> = T | null;
 
-export type User = {
-  id: string;
-  name: string;
-  email: string;
-  country: string;
-  profile_url: string;
-  image_path: string;
-  topSongs: Nullable<Song[]>;
-  topArtists: Nullable<Artist[]>;
-};
+export type User = z.infer<typeof UserSchema>;
+
+export type Song = z.infer<typeof SongSchema>;
+
+export type Artist = z.infer<typeof ArtistSchema>;
 
 export type Filters = {
   artists: string[];
@@ -19,20 +70,4 @@ export type Filters = {
   valence: Nullable<number>;
   danceability: Nullable<number>;
   loudness: Nullable<number>;
-};
-
-export type Song = {
-  id: string;
-  name: string;
-  external_url: string;
-  images: { medium: string; large: string };
-  album: string;
-  artists: string[];
-};
-
-export type Artist = {
-  id: string;
-  name: string;
-  external_url: string;
-  images: { medium: string; large: string };
 };

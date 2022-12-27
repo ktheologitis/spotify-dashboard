@@ -1,19 +1,24 @@
 import { useQuery } from "@tanstack/react-query";
-import { useContext } from "react";
-import { AuthContext } from "../contextProviders/AuthorizationContextProvider";
 import { getGenres } from "../lib/api";
+import { sleep } from "../lib/helpers";
+import { GenresSchema, Nullable } from "../lib/types";
 
-export const useGenres = () => {
-  const auth = useContext(AuthContext);
-  const genreData = useQuery(
+export const useGenres = (
+  authToken: string
+): Nullable<string[]> => {
+  const { data } = useQuery(
     ["genres"],
-    () => {
-      return getGenres(auth.token);
+    async () => {
+      await sleep(2000);
+      return getGenres(authToken);
     },
     {
+      enabled: authToken !== "",
       staleTime: Infinity,
     }
   );
 
-  return genreData;
+  const parsedData = GenresSchema.safeParse(data);
+
+  return parsedData.success ? parsedData.data.genres : null;
 };

@@ -1,61 +1,32 @@
 import React, { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { useUser } from "../../hooks/useUser";
+import { useRecomendations } from "../../hooks/useRecommendations";
+import { useTopSongs } from "../../hooks/useTopSongs";
+import { FiltersContext } from "../../contextProviders/FiltersContextProvider";
+import { AuthContext } from "../../contextProviders/AuthorizationContextProvider";
+import { Nullable, Song } from "../../lib/types";
+import { IconButtonStyles } from "../../lib/enums";
 import IconButton from "../../components/IconButton/IconButton";
 import SongCard from "../../components/SongCard/SongCard";
-import { IconButtonStyles } from "../../lib/enums";
 import filterIcon from "../../static/icons/filter.svg";
 import "./recommendations-page.scss";
-import { useNavigate } from "react-router-dom";
-import { UserDataContext } from "../../contextProviders/UserDataContextProvider";
-import { useRecomendations } from "../../hooks/useRecommendations";
 
 const RecommendationsPage = () => {
   const navigate = useNavigate();
-  const user = useContext(UserDataContext);
-  const recommendationData = useRecomendations();
+  const auth = useContext(AuthContext);
+  const user = useUser(auth.token);
+  const topSongs = useTopSongs(auth.token, user?.id);
+  const { filters } = useContext(FiltersContext);
+  const recommendationData = useRecomendations(
+    auth.token,
+    filters
+  );
 
-  let default_songs;
-  let recommendations;
+  let songs: Nullable<Song[]> = topSongs;
 
   if (recommendationData) {
-    recommendations = (
-      <>
-        {recommendationData.map((song) => {
-          return (
-            <React.Fragment key={song.id}>
-              <SongCard
-                imgSrc={song.images.medium}
-                name={song.name}
-                album={song.album}
-                handleClick={() => {
-                  window.open(song.external_url, "_blank");
-                }}
-              />
-            </React.Fragment>
-          );
-        })}
-      </>
-    );
-  }
-
-  if (user && user.topSongs) {
-    default_songs = (
-      <>
-        {user.topSongs.map((song) => {
-          return (
-            <React.Fragment key={song.id}>
-              <SongCard
-                imgSrc={song.images.medium}
-                name={song.name}
-                album={song.album}
-                handleClick={() => {
-                  window.open(song.external_url, "_blank");
-                }}
-              />
-            </React.Fragment>
-          );
-        })}
-      </>
-    );
+    songs = recommendationData;
   }
 
   return (
@@ -66,7 +37,24 @@ const RecommendationsPage = () => {
         </h1>
       </header>
       <section className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-7 mt-5">
-        {recommendations ? recommendations : default_songs}
+        {songs &&
+          songs.map((song) => {
+            return (
+              <React.Fragment key={song.id}>
+                <SongCard
+                  imgSrc={song.album.images[1].url}
+                  name={song.name}
+                  album={song.album.name}
+                  handleClick={() => {
+                    window.open(
+                      song.external_urls.spotify,
+                      "_blank"
+                    );
+                  }}
+                />
+              </React.Fragment>
+            );
+          })}
       </section>
       <section className="filter-icon-button">
         <IconButton

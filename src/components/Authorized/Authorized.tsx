@@ -1,15 +1,22 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../contextProviders/AuthorizationContextProvider";
-import UnauthorizedDialog from "../UnauthorizedDialog/UnauthorizedDialog";
 
 const Authorized = ({
   children,
 }: {
   children: React.ReactNode;
 }) => {
+  const navigate = useNavigate();
   const auth = useContext(AuthContext);
 
-  return <>{auth.token ? children : <UnauthorizedDialog />}</>;
+  useEffect(() => {
+    if (!auth.token) {
+      navigate("/authorize");
+    }
+  }, [auth.token, navigate]);
+
+  return <>{auth.token && children}</>;
 };
 
 export default Authorized;
