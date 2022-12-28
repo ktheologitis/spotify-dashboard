@@ -1,5 +1,11 @@
 import { z } from "zod";
 
+const ImageSchema = z.object({
+  height: z.number(),
+  width: z.number(),
+  url: z.string(),
+});
+
 export const UserSchema = z.object({
   id: z.string(),
   country: z.string(),
@@ -15,13 +21,7 @@ export const SongSchema = z.object({
   external_urls: z.object({ spotify: z.string() }),
   album: z.object({
     name: z.string(),
-    images: z.array(
-      z.object({
-        height: z.number(),
-        width: z.number(),
-        url: z.string(),
-      })
-    ),
+    images: z.array(ImageSchema),
   }),
 });
 
@@ -37,13 +37,7 @@ export const ArtistSchema = z.object({
   id: z.string(),
   name: z.string(),
   external_urls: z.object({ spotify: z.string() }),
-  images: z.array(
-    z.object({
-      height: z.number(),
-      width: z.number(),
-      url: z.string(),
-    })
-  ),
+  images: z.array(ImageSchema),
 });
 
 export const TopArtistsSchema = z.object({
@@ -54,7 +48,17 @@ export const GenresSchema = z.object({
   genres: z.array(z.string()),
 });
 
+export const ArtistSearchSchema = z.object({
+  artiss: z.object({ items: z.array(ArtistSchema) }),
+});
+
+export const SongSearchSchema = z.object({
+  tracks: z.object({ items: z.array(ArtistSchema) }),
+});
+
 export type Nullable<T> = T | null;
+
+export type Image = z.infer<typeof ImageSchema>;
 
 export type User = z.infer<typeof UserSchema>;
 
