@@ -1,14 +1,18 @@
 @import "../../stylesheets/_variables";
 
 .authorization-page {
-  padding: 1.6rem;
+  padding: $app-main-content-padding-mobile;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 1.6rem;
   width: 100%;
-  height: calc(100% - $app-bar-height-mobile);
+  height: calc(
+    100% - $app-bar-height-mobile - 2 *
+      $app-main-content-padding-mobile
+  );
+  width: calc(100% - (2 * $app-main-content-padding-mobile));
   background-color: $spotify-black;
 
   &__title {
@@ -33,7 +37,11 @@
 
 @media screen and (min-width: 768px) {
   .authorization-page {
-    height: calc(100% - $app-bar-height);
+    padding: $app-main-content-padding;
+    height: calc(
+      100% - $app-bar-height - 2 * $app-main-content-padding
+    );
+    width: calc(100% - 2 * $app-main-content-padding);
     &__important-message,
     .spotify-button {
       min-width: 30%;

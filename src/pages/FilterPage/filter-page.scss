@@ -1,7 +1,7 @@
 @import "../../stylesheets/variables";
 
 .filter-page {
-  padding: 0 1.6rem;
+  padding: 0 $app-main-content-padding-mobile;
 }
 
 .ok-icon-button {
@@ -12,4 +12,7 @@
 }
 
 @media screen and (min-width: 768px) {
+  .filter-page {
+    padding: 0 $app-main-content-padding;
+  }
 }

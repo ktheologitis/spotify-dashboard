@@ -36,7 +36,7 @@ const RecommendationsPage = () => {
           Recommendations
         </h1>
       </header>
-      <section className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-7 mt-5">
+      <section className="recommendations-page__content">
         {songs &&
           songs.map((song) => {
             return (
