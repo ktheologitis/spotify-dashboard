@@ -42,7 +42,7 @@ const RecommendationsPage = () => {
             return (
               <React.Fragment key={song.id}>
                 <SongCard
-                  imgSrc={song.album.images[1].url}
+                  images={song.album.images}
                   name={song.name}
                   album={song.album.name}
                   handleClick={() => {

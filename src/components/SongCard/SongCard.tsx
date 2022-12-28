@@ -1,16 +1,17 @@
 import classNames from "classnames";
 import { useState } from "react";
+import { Image } from "../../lib/types";
 import "./song-card.scss";
 
 const SongCard = ({
-  imgSrc,
+  images,
   name,
   album,
   selectable = false,
   selected = false,
   handleClick,
 }: {
-  imgSrc: string;
+  images: Image[];
   name: string;
   album: string;
   selectable?: boolean;
@@ -20,6 +21,10 @@ const SongCard = ({
   const [isSelected, setIsSelected] = useState(
     selected ? selected : false
   );
+
+  let image = "";
+  if (images.length === 1) image = images[0].url;
+  else if (images.length > 1) image = images[1].url;
 
   return (
     <article
@@ -32,7 +37,7 @@ const SongCard = ({
       }}
     >
       <section className="song-card__image">
-        <img src={imgSrc} alt="song-pic" loading="lazy" />
+        <img src={image} alt="song-pic" loading="lazy" />
       </section>
       <header className="song-card__name">{name}</header>
       <p className="song-card__album">{album}</p>

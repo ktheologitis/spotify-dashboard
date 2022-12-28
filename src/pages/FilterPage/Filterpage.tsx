@@ -1,19 +1,18 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTopArtists } from "../../hooks/useTopArtists";
 import { useTopSongs } from "../../hooks/useTopSongs";
 import { useGenres } from "../../hooks/useGenres";
 import { useUser } from "../../hooks/useUser";
-import { FilterState, useFilter } from "../../hooks/useFilter";
-import { Filters, IconButtonStyles } from "../../lib/enums";
+import { useFilter } from "../../hooks/useFilter";
+import { IconButtonStyles } from "../../lib/enums";
 import { FiltersContext } from "../../contextProviders/FiltersContextProvider";
 import { AuthContext } from "../../contextProviders/AuthorizationContextProvider";
-import ArtistCard from "../../components/ArtistCard/ArtistCard";
-import FilterSection from "../../components/FilterSection/FilterSection";
-import SongCard from "../../components/SongCard/SongCard";
-import Chip from "../../components/Chip/Chip";
+import ArtistFilterSection from "../../components/FilterSections/ArtistFilterSection";
+import SongFilterSection from "../../components/FilterSections/SongFilterSection";
+import GenreFilterSection from "../../components/FilterSections/GenreFilterSection";
+import AudioFeatureFilterSection from "../../components/FilterSections/AudioFeatureFilterSection";
 import IconButton from "../../components/IconButton/IconButton";
-import SliderInput from "../../components/SliderInput/SliderInput";
 import okIcon from "../../static/icons/ok.svg";
 import "./filter-page.scss";
 
@@ -24,7 +23,7 @@ const FilterPage = () => {
   const user = useUser(auth.token);
   const topArtists = useTopArtists(auth.token, user?.id);
   const topSongs = useTopSongs(auth.token, user?.id);
-  const genreData = useGenres(auth.token);
+  const genres = useGenres(auth.token);
 
   const artistsFilter = useFilter(filters?.artists);
   const songsFilter = useFilter(filters?.songs);
@@ -34,185 +33,35 @@ const FilterPage = () => {
   const acousticnessFilter = useFilter(filters?.acousticness);
   const danceabilityFilter = useFilter(filters?.danceability);
 
-  const handleSelectionFilter = (
-    filter: FilterState<string[] | null>,
-    selected: string
-  ) => {
-    if (filter.data?.includes(selected)) {
-      filter.set(
-        filter.data.filter((item) => item !== selected)
-      );
-      return;
-    }
-    filter.data
-      ? filter.set([...filter.data, selected])
-      : filter.set([selected]);
-  };
-
-  const handleRangeFilter = (
-    filter: FilterState<number | null>,
-    value: number
-  ) => {
-    filter.set(value);
-  };
-
-  let artists;
-  let songs;
-  let genres;
-
-  if (topArtists && topSongs) {
-    artists = (
-      <>
-        {topArtists.map((artist) => {
-          return (
-            <React.Fragment key={artist.id}>
-              <ArtistCard
-                imgSrc={artist.images[1].url}
-                name={artist.name}
-                selected={artistsFilter.data?.includes(
-                  artist.id
-                )}
-                handleClick={() => {
-                  handleSelectionFilter(
-                    artistsFilter,
-                    artist.id
-                  );
-                }}
-              />
-            </React.Fragment>
-          );
-        })}
-      </>
-    );
-
-    songs = (
-      <>
-        {topSongs.slice(0, 10).map((song) => {
-          return (
-            <React.Fragment key={song.id}>
-              <SongCard
-                imgSrc={song.album.images[1].url}
-                name={song.name}
-                album={song.album.name}
-                selectable={true}
-                selected={songsFilter.data?.includes(song.id)}
-                handleClick={() => {
-                  handleSelectionFilter(songsFilter, song.id);
-                }}
-              />
-            </React.Fragment>
-          );
-        })}
-      </>
-    );
-  }
-
-  if (genreData) {
-    genres = (
-      <>
-        {genreData.slice(0, 10).map((genre: string) => {
-          return (
-            <React.Fragment key={genre}>
-              <Chip
-                label={genre}
-                selected={genresFilter.data?.includes(genre)}
-                handleClick={() => {
-                  handleSelectionFilter(genresFilter, genre);
-                }}
-              />
-            </React.Fragment>
-          );
-        })}
-      </>
-    );
-  }
-
   return (
     <main className="filter-page">
-      <FilterSection
-        type={Filters.Artist}
-        title="Artists"
-        filter={artists ? artists : <></>}
+      <ArtistFilterSection
+        topArtists={topArtists}
+        artistsFilter={artistsFilter}
       />
-      <FilterSection
-        type={Filters.Song}
-        title="Songs"
-        filter={songs ? songs : <></>}
+      <SongFilterSection
+        topSongs={topSongs}
+        songFilter={songsFilter}
       />
-      <FilterSection
-        type={Filters.Genre}
-        title="Genres"
-        filter={genres ? genres : <></>}
+      <GenreFilterSection
+        genres={genres}
+        genresFilter={genresFilter}
       />
-      <FilterSection
-        type={Filters.AudioFeature}
-        title="Acousticness"
-        featureValue={acousticnessFilter?.data}
-        filter={
-          <div className="slider-wrapper">
-            <SliderInput
-              currentValue={
-                acousticnessFilter.data
-                  ? acousticnessFilter.data
-                  : 0
-              }
-              handleChange={(newValue) => {
-                handleRangeFilter(acousticnessFilter, newValue);
-              }}
-            />
-          </div>
-        }
+      <AudioFeatureFilterSection
+        name="Acousticness"
+        audioFeatureFilter={acousticnessFilter}
       />
-      <FilterSection
-        type={Filters.AudioFeature}
-        title="Valence"
-        featureValue={valenceFilter?.data}
-        filter={
-          <div className="slider-wrapper">
-            <SliderInput
-              currentValue={
-                valenceFilter.data ? valenceFilter.data : 0
-              }
-              handleChange={(newValue) => {
-                handleRangeFilter(valenceFilter, newValue);
-              }}
-            />
-          </div>
-        }
+      <AudioFeatureFilterSection
+        name="Valence"
+        audioFeatureFilter={valenceFilter}
       />
-      <FilterSection
-        type={Filters.AudioFeature}
-        title="Danceability"
-        featureValue={danceabilityFilter?.data}
-        filter={
-          <div className="slider-wrapper">
-            <SliderInput
-              currentValue={
-                danceabilityFilter.data
-                  ? danceabilityFilter.data
-                  : 0
-              }
-              handleChange={(newValue) => {
-                handleRangeFilter(danceabilityFilter, newValue);
-              }}
-            />
-          </div>
-        }
+      <AudioFeatureFilterSection
+        name="Danceability"
+        audioFeatureFilter={danceabilityFilter}
       />
-      <FilterSection
-        type={Filters.AudioFeature}
-        title="Loudness"
-        featureValue={loudnessFilter?.data}
-        filter={
-          <SliderInput
-            currentValue={
-              loudnessFilter.data ? loudnessFilter.data : 0
-            }
-            handleChange={(newValue) => {
-              handleRangeFilter(loudnessFilter, newValue);
-            }}
-          />
-        }
+      <AudioFeatureFilterSection
+        name="Loudness"
+        audioFeatureFilter={loudnessFilter}
       />
       <section className="ok-icon-button">
         <IconButton

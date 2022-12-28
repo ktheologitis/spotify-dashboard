@@ -3,7 +3,13 @@ import {
   getAudioFeatureMax,
   getAudioFeatureMin,
 } from "./helpers";
-import { Filters } from "./types";
+import {
+  Artist,
+  ArtistSearchSchema,
+  Filters,
+  Song,
+  SongSearchSchema,
+} from "./types";
 
 axios.defaults.baseURL = "https://api.spotify.com/v1";
 
@@ -90,4 +96,37 @@ export async function getRecommendations(
     }
   );
   return response.data;
+}
+
+export async function search<T extends Artist[] | Song[]>(
+  token: string,
+  q: string,
+  type: "artist" | "track"
+): Promise<T | undefined> {
+  let limit = 10;
+  if (type === "track") limit = 20;
+  const response: AxiosResponse<T> = await axios.get("search", {
+    params: { q, type, limit },
+    headers: getHeaders(token),
+  });
+
+  if (type === "artist") {
+    try {
+      const parsedArtistData = ArtistSearchSchema.parse(
+        response.data
+      );
+      return parsedArtistData.artiss.items as T;
+    } catch (error) {
+      throw error;
+    }
+  } else {
+    try {
+      const parsedSongData = SongSearchSchema.parse(
+        response.data
+      );
+      return parsedSongData.tracks.items as T;
+    } catch (error) {
+      throw error;
+    }
+  }
 }
