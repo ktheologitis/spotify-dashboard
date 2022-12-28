@@ -9,7 +9,6 @@ import {
 import AuthorizationContextProvider from "./contextProviders/AuthorizationContextProvider";
 import FiltersContextProvider from "./contextProviders/FiltersContextProvider";
 import App from "./components/App";
-import "./index.css";
 
 const queryClient = new QueryClient();
 
