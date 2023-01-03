@@ -27,6 +27,7 @@ const Input = ({
       </label>
       <input
         type="search"
+        autoComplete="off"
         className="input-container__input"
         placeholder={label}
         name="spotify-input"

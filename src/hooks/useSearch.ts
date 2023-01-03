@@ -11,8 +11,11 @@ export const useSearch = <T extends Artist[] | Song[]>(
   const { data, isLoading, isFetching, isError } = useQuery({
     queryKey: ["search", [q, type]],
     queryFn: async () => {
-      await sleep(2000);
+      // await sleep(2000);
       return search<T>(authToken, q, type);
+    },
+    onError(err) {
+      console.log(err);
     },
     enabled: authToken !== "" && q.trim() !== "",
     staleTime: Infinity,

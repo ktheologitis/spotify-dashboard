@@ -1,13 +1,12 @@
 import React, {
   useState,
   useContext,
-  useEffect,
+  useLayoutEffect,
   useCallback,
 } from "react";
 import IconButton from "../IconButton/IconButton";
 import Input from "../Input/Input";
 import { IconButtonStyles } from "../../lib/enums";
-import informationIcon from "../../static/icons/information.svg";
 import updateIcon from "../../static/icons/update.svg";
 import { AuthContext } from "../../contextProviders/AuthorizationContextProvider";
 import { useSearch } from "../../hooks/useSearch";
@@ -27,11 +26,9 @@ const ArtistFilterSection = ({
   const [searchValue, setSearchValue] = useState("");
 
   const auth = useContext(AuthContext);
-  const { searchResults } = useSearch<Artist[]>(
-    auth.token,
-    searchValue,
-    "artist"
-  );
+  const { searchResults, isLoading, isFetching } = useSearch<
+    Artist[]
+  >(auth.token, searchValue, "artist");
 
   const handleArtistCardClick = (selected: string) => {
     if (artistsFilter.data?.includes(selected)) {
@@ -52,12 +49,12 @@ const ArtistFilterSection = ({
     []
   );
 
-  useEffect(() => {
-    if (searchValue.trim() === "" || !searchResults) {
+  useLayoutEffect(() => {
+    if (searchValue.trim() === "") {
       setArtists(topArtists);
       return;
     }
-    setArtists(searchResults);
+    if (searchResults) setArtists(searchResults);
   }, [searchResults, searchValue, topArtists]);
 
   return (
@@ -65,10 +62,6 @@ const ArtistFilterSection = ({
       <section className="filter-section">
         <header className="filter-section__header">
           <h1 className="filter-section__title">Artists</h1>
-          <IconButton
-            iconSrc={informationIcon}
-            style={IconButtonStyles.Secondary}
-          />
           <IconButton
             iconSrc={updateIcon}
             style={IconButtonStyles.Secondary}

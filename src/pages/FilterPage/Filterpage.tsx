@@ -24,7 +24,6 @@ const FilterPage = () => {
   const topArtists = useTopArtists(auth.token, user?.id);
   const topSongs = useTopSongs(auth.token, user?.id);
   const genres = useGenres(auth.token);
-
   const artistsFilter = useFilter(filters?.artists);
   const songsFilter = useFilter(filters?.songs);
   const genresFilter = useFilter(filters?.genres);

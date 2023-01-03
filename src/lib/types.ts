@@ -49,7 +49,7 @@ export const GenresSchema = z.object({
 });
 
 export const ArtistSearchSchema = z.object({
-  artiss: z.object({ items: z.array(ArtistSchema) }),
+  artists: z.object({ items: z.array(ArtistSchema) }),
 });
 
 export const SongSearchSchema = z.object({

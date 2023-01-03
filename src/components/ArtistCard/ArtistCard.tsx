@@ -32,9 +32,12 @@ const ArtistCard = ({
         handleClick && handleClick();
       }}
     >
-      <div className="artist-card__image">
-        <img src={image} alt="artist-pic" loading="lazy" />
-      </div>
+      <img
+        className="artist-card__image"
+        src={image}
+        alt="pic"
+        loading="lazy"
+      />
       <header className="artist-card__name">{name}</header>
     </article>
   );

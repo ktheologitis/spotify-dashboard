@@ -115,7 +115,7 @@ export async function search<T extends Artist[] | Song[]>(
       const parsedArtistData = ArtistSearchSchema.parse(
         response.data
       );
-      return parsedArtistData.artiss.items as T;
+      return parsedArtistData.artists.items as T;
     } catch (error) {
       throw error;
     }
