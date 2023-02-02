@@ -53,7 +53,7 @@ export const ArtistSearchSchema = z.object({
 });
 
 export const SongSearchSchema = z.object({
-  tracks: z.object({ items: z.array(ArtistSchema) }),
+  tracks: z.object({ items: z.array(SongSchema) }),
 });
 
 export type Nullable<T> = T | null;
