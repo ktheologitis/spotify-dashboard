@@ -1,4 +1,9 @@
-import React from "react";
+import React, {
+  useCallback,
+  useContext,
+  useLayoutEffect,
+  useState,
+} from "react";
 import IconButton from "../IconButton/IconButton";
 import Input from "../Input/Input";
 import { IconButtonStyles } from "../../lib/enums";
@@ -7,6 +12,8 @@ import { Nullable, Song } from "../../lib/types";
 import { FilterState } from "../../hooks/useFilter";
 import "./filter-section.scss";
 import SongCard from "../SongCard/SongCard";
+import { AuthContext } from "../../contextProviders/AuthorizationContextProvider";
+import { useSearch } from "../../hooks/useSearch";
 
 const SongFilterSection = ({
   topSongs,
@@ -15,6 +22,14 @@ const SongFilterSection = ({
   topSongs: Nullable<Song[]>;
   songFilter: FilterState<string[] | null>;
 }) => {
+  const [songs, setSongs] = useState(topSongs);
+  const [searchValue, setSearchValue] = useState("");
+
+  const auth = useContext(AuthContext);
+  const { searchResults, isLoading, isFetching } = useSearch<
+    Song[]
+  >(auth.token, searchValue, "track");
+
   const handleSongCardClick = (selected: string) => {
     if (songFilter.data?.includes(selected)) {
       songFilter.set(
@@ -27,6 +42,21 @@ const SongFilterSection = ({
       : songFilter.set([selected]);
   };
 
+  const handleSearchInputChange = useCallback(
+    (newInput: string) => {
+      setSearchValue(newInput);
+    },
+    []
+  );
+
+  useLayoutEffect(() => {
+    if (searchValue.trim() === "") {
+      setSongs(topSongs);
+      return;
+    }
+    if (searchResults) setSongs(searchResults);
+  }, [searchResults, searchValue, topSongs]);
+
   return (
     <section className="filter-section">
       <header className="filter-section__header">
@@ -36,11 +66,14 @@ const SongFilterSection = ({
           iconSrc={updateIcon}
           style={IconButtonStyles.Secondary}
         />
-        <Input label="Songs" handleChangeValue={() => {}} />
+        <Input
+          label="Songs"
+          handleChangeValue={handleSearchInputChange}
+        />
       </header>
-      <main className="filter-section__main">
-        {topSongs &&
-          topSongs.map((song) => {
+      <div className="filter-section__main">
+        {songs &&
+          songs.map((song) => {
             return (
               <React.Fragment key={song.id}>
                 <SongCard
@@ -56,7 +89,7 @@ const SongFilterSection = ({
               </React.Fragment>
             );
           })}
-      </main>
+      </div>
       <footer className="filter-section__footer">
         <em>See selected</em>
       </footer>

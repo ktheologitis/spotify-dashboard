@@ -71,7 +71,7 @@ const ArtistFilterSection = ({
             handleChangeValue={handleSearchInputChange}
           />
         </header>
-        <main className="filter-section__main">
+        <div className="filter-section__main">
           {artists &&
             artists.map((artist) => {
               return (
@@ -89,7 +89,7 @@ const ArtistFilterSection = ({
                 </React.Fragment>
               );
             })}
-        </main>
+        </div>
         <footer className="filter-section__footer">
           <em>See selected</em>
         </footer>
