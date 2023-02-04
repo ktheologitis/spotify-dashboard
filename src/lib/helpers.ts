@@ -39,3 +39,7 @@ export const getAudioFeatureMin = (
 export const sleep = (ms: number) => {
   return new Promise((resolve) => setTimeout(resolve, ms));
 };
+
+export const getRandomInt = (max: number) => {
+  return Math.floor(Math.random() * max);
+};

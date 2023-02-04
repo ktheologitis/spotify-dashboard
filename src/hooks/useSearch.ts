@@ -4,18 +4,15 @@ import { Artist, Song } from "../lib/types";
 
 export const useSearch = <T extends Artist[] | Song[]>(
   authToken: string,
-  q: string,
+  searchValue: string,
   type: "artist" | "track"
 ) => {
   const { data, isLoading, isFetching, isError } = useQuery({
-    queryKey: ["search", [q, type]],
+    queryKey: ["search", [searchValue, type]],
     queryFn: async () => {
-      return search<T>(authToken, q, type);
+      return search<T>(authToken, searchValue, type);
     },
-    onError(err) {
-      console.log(err);
-    },
-    enabled: authToken !== "" && q.trim() !== "",
+    enabled: authToken !== "" && searchValue.trim() !== "",
     staleTime: Infinity,
   });
 

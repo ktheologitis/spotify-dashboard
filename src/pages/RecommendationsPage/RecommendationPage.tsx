@@ -16,7 +16,11 @@ const RecommendationsPage = () => {
   const navigate = useNavigate();
   const auth = useContext(AuthContext);
   const user = useUser(auth.token);
-  const topSongs = useTopSongs(auth.token, user?.id);
+  const { topSongs } = useTopSongs({
+    authToken: auth.token,
+    userId: user?.id,
+    limit: 30,
+  });
   const { filters } = useContext(FiltersContext);
   const recommendationData = useRecomendations(
     auth.token,

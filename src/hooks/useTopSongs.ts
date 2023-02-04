@@ -2,16 +2,28 @@ import { useQuery } from "@tanstack/react-query";
 import { getUserTopSongs } from "../lib/api";
 import { Nullable, Song, TopSongsSchema } from "../lib/types";
 import { sleep } from "../lib/helpers";
+import { useMemo } from "react";
 
-export const useTopSongs = (
-  authToken: string,
-  userId: string | undefined
-): Nullable<Song[]> => {
-  const { data } = useQuery(
-    ["top/songs", userId],
+export const useTopSongs = ({
+  authToken,
+  userId,
+  limit = 15,
+  offset = 0,
+}: {
+  authToken: string;
+  userId: string | undefined;
+  limit?: number;
+  offset?: number;
+}): {
+  topSongs: Nullable<Song[]>;
+  topSongsCount: Nullable<number>;
+  getTopSongsSuccess: boolean;
+} => {
+  const { data, isSuccess } = useQuery(
+    ["top/songs", [userId, offset, limit]],
     async () => {
-      await sleep(2000);
-      return getUserTopSongs(authToken);
+      // await sleep(2000);
+      return getUserTopSongs(authToken, offset, limit);
     },
     {
       enabled: userId !== undefined,
@@ -19,7 +31,16 @@ export const useTopSongs = (
     }
   );
 
-  const parsedData = TopSongsSchema.safeParse(data);
+  const parsedData = useMemo(
+    () => TopSongsSchema.safeParse(data),
+    [data]
+  );
 
-  return parsedData.success ? parsedData.data.items : null;
+  return {
+    topSongs: parsedData.success ? parsedData.data.items : null,
+    topSongsCount: parsedData.success
+      ? parsedData.data.total
+      : null,
+    getTopSongsSuccess: isSuccess,
+  };
 };
