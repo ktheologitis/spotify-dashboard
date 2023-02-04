@@ -35,6 +35,7 @@ const ArtistFilterSection = ({
       authToken: auth.token,
       userId: user?.id,
       offset,
+      limit: 15,
     });
 
   const { searchResults, isLoading, isFetching } = useSearch<

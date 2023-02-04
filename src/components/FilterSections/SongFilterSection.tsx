@@ -34,7 +34,7 @@ const SongFilterSection = ({
       authToken: auth.token,
       userId: user?.id,
       offset: offset,
-      limit: 10,
+      limit: 15,
     });
 
   const { searchResults, isLoading, isFetching } = useSearch<
