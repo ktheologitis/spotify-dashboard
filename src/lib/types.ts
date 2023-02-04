@@ -27,6 +27,7 @@ export const SongSchema = z.object({
 
 export const TopSongsSchema = z.object({
   items: z.array(SongSchema),
+  total: z.number(),
 });
 
 export const RecommendationsSchema = z.object({
@@ -42,6 +43,7 @@ export const ArtistSchema = z.object({
 
 export const TopArtistsSchema = z.object({
   items: z.array(ArtistSchema),
+  total: z.number(),
 });
 
 export const GenresSchema = z.object({

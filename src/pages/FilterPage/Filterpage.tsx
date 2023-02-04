@@ -18,12 +18,7 @@ import "./filter-page.scss";
 
 const FilterPage = () => {
   const navigate = useNavigate();
-  const auth = useContext(AuthContext);
   const { filters, update } = useContext(FiltersContext);
-  const user = useUser(auth.token);
-  const topArtists = useTopArtists(auth.token, user?.id);
-  const topSongs = useTopSongs(auth.token, user?.id);
-  const genres = useGenres(auth.token);
   const artistsFilter = useFilter(filters?.artists);
   const songsFilter = useFilter(filters?.songs);
   const genresFilter = useFilter(filters?.genres);
@@ -34,18 +29,9 @@ const FilterPage = () => {
 
   return (
     <main className="filter-page">
-      <ArtistFilterSection
-        topArtists={topArtists}
-        artistsFilter={artistsFilter}
-      />
-      <SongFilterSection
-        topSongs={topSongs}
-        songFilter={songsFilter}
-      />
-      <GenreFilterSection
-        genres={genres}
-        genresFilter={genresFilter}
-      />
+      <ArtistFilterSection artistsFilter={artistsFilter} />
+      <SongFilterSection songFilter={songsFilter} />
+      <GenreFilterSection genresFilter={genresFilter} />
       <AudioFeatureFilterSection
         name="Acousticness"
         audioFeatureFilter={acousticnessFilter}

@@ -14,18 +14,29 @@ import { Artist, Nullable } from "../../lib/types";
 import ArtistCard from "../ArtistCard/ArtistCard";
 import { FilterState } from "../../hooks/useFilter";
 import "./filter-section.scss";
+import { getRandomInt } from "../../lib/helpers";
+import { useUser } from "../../hooks/useUser";
+import { useTopArtists } from "../../hooks/useTopArtists";
 
 const ArtistFilterSection = ({
-  topArtists,
   artistsFilter,
 }: {
-  topArtists: Nullable<Artist[]>;
   artistsFilter: FilterState<string[] | null>;
 }) => {
-  const [artists, setArtists] = useState(topArtists);
-  const [searchValue, setSearchValue] = useState("");
-
   const auth = useContext(AuthContext);
+  const user = useUser(auth.token);
+  const [searchValue, setSearchValue] = useState("");
+  const [offset, setOffset] = useState(0);
+  const [artists, setArtists] =
+    useState<Nullable<Artist[]>>(null);
+
+  const { topArtists, topArtistsCount, getTopArtistsSuccess } =
+    useTopArtists({
+      authToken: auth.token,
+      userId: user?.id,
+      offset,
+    });
+
   const { searchResults, isLoading, isFetching } = useSearch<
     Artist[]
   >(auth.token, searchValue, "artist");
@@ -49,13 +60,27 @@ const ArtistFilterSection = ({
     []
   );
 
+  const shuffleTopArtists = () => {
+    if (topArtistsCount) {
+      const rand = getRandomInt(topArtistsCount - 10);
+      setOffset(rand);
+    }
+  };
+
   useLayoutEffect(() => {
-    if (searchValue.trim() === "") {
+    if (searchValue.trim() === "" && getTopArtistsSuccess) {
       setArtists(topArtists);
       return;
     }
-    if (searchResults) setArtists(searchResults);
-  }, [searchResults, searchValue, topArtists]);
+    if (searchResults) {
+      setArtists(searchResults);
+    }
+  }, [
+    searchResults,
+    searchValue,
+    topArtists,
+    getTopArtistsSuccess,
+  ]);
 
   return (
     <>
@@ -65,6 +90,7 @@ const ArtistFilterSection = ({
           <IconButton
             iconSrc={updateIcon}
             style={IconButtonStyles.Secondary}
+            handleClick={shuffleTopArtists}
           />
           <Input
             label="Artists"

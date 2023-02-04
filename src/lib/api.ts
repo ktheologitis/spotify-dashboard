@@ -24,22 +24,30 @@ export async function getUserData(token: string) {
   return response.data;
 }
 
-export async function getUserTopSongs(token: string) {
+export async function getUserTopSongs(
+  token: string,
+  offset: number,
+  limit: number
+) {
   const response: AxiosResponse = await axios.get(
     "me/top/tracks",
     {
-      params: { limit: 20 },
+      params: { limit, offset },
       headers: getHeaders(token),
     }
   );
   return response.data;
 }
 
-export async function getUserTopArtists(token: string) {
+export async function getUserTopArtists(
+  token: string,
+  offset: number,
+  limit: number
+) {
   const response: AxiosResponse = await axios.get(
     "me/top/artists",
     {
-      params: { limit: 10 },
+      params: { limit, offset },
       headers: getHeaders(token),
     }
   );
@@ -50,6 +58,7 @@ export async function getGenres(token: string) {
   const response: AxiosResponse = await axios.get(
     "recommendations/available-genre-seeds",
     {
+      params: { limit: 10 },
       headers: getHeaders(token),
     }
   );

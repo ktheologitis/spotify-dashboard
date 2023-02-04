@@ -1,20 +1,29 @@
-import React from "react";
+import React, {
+  useContext,
+  useEffect,
+  useLayoutEffect,
+  useState,
+} from "react";
 import IconButton from "../IconButton/IconButton";
 import { IconButtonStyles } from "../../lib/enums";
 import informationIcon from "../../static/icons/information.svg";
-import updateIcon from "../../static/icons/update.svg";
 import { Nullable } from "../../lib/types";
 import { FilterState } from "../../hooks/useFilter";
 import "./filter-section.scss";
 import Chip from "../Chip/Chip";
+import { useGenres } from "../../hooks/useGenres";
+import { AuthContext } from "../../contextProviders/AuthorizationContextProvider";
 
 const GenreFilterSection = ({
-  genres,
   genresFilter,
 }: {
-  genres: Nullable<string[]>;
   genresFilter: FilterState<string[] | null>;
 }) => {
+  const auth = useContext(AuthContext);
+  const genres = useGenres(auth.token);
+  const [displayedGenres, setDisplayedGenres] =
+    useState<Nullable<string[]>>(null);
+
   const handleClick = (selected: string) => {
     if (genresFilter.data?.includes(selected)) {
       genresFilter.set(
@@ -27,6 +36,13 @@ const GenreFilterSection = ({
       : genresFilter.set([selected]);
   };
 
+  useLayoutEffect(() => {
+    if (genres)
+      setDisplayedGenres(
+        genres.length > 15 ? genres.slice(0, 15) : genres
+      );
+  }, [genres]);
+
   return (
     <section className="filter-section">
       <header className="filter-section__header">
@@ -35,14 +51,10 @@ const GenreFilterSection = ({
           iconSrc={informationIcon}
           style={IconButtonStyles.Secondary}
         />
-        <IconButton
-          iconSrc={updateIcon}
-          style={IconButtonStyles.Secondary}
-        />
       </header>
       <main className="filter-section__main--genres">
-        {genres &&
-          genres.slice(0, 10).map((genre: string) => {
+        {displayedGenres &&
+          displayedGenres.map((genre: string) => {
             return (
               <React.Fragment key={genre}>
                 <Chip
@@ -55,6 +67,23 @@ const GenreFilterSection = ({
               </React.Fragment>
             );
           })}
+        {displayedGenres && genres && (
+          <span>
+            <button
+              onClick={() => {
+                setDisplayedGenres(
+                  displayedGenres.length > 15
+                    ? genres.slice(0, 15)
+                    : genres
+                );
+              }}
+            >
+              {displayedGenres.length > 15
+                ? "show less"
+                : "show more"}
+            </button>
+          </span>
+        )}
       </main>
       <footer className="filter-section__footer">
         <em>See selected</em>

@@ -14,18 +14,29 @@ import "./filter-section.scss";
 import SongCard from "../SongCard/SongCard";
 import { AuthContext } from "../../contextProviders/AuthorizationContextProvider";
 import { useSearch } from "../../hooks/useSearch";
+import { useUser } from "../../hooks/useUser";
+import { useTopSongs } from "../../hooks/useTopSongs";
+import { getRandomInt } from "../../lib/helpers";
 
 const SongFilterSection = ({
-  topSongs,
   songFilter,
 }: {
-  topSongs: Nullable<Song[]>;
   songFilter: FilterState<string[] | null>;
 }) => {
-  const [songs, setSongs] = useState(topSongs);
-  const [searchValue, setSearchValue] = useState("");
-
   const auth = useContext(AuthContext);
+  const user = useUser(auth.token);
+  const [searchValue, setSearchValue] = useState("");
+  const [offset, setOffset] = useState(0);
+  const [songs, setSongs] = useState<Nullable<Song[]>>(null);
+
+  const { topSongs, topSongsCount, getTopSongsSuccess } =
+    useTopSongs({
+      authToken: auth.token,
+      userId: user?.id,
+      offset: offset,
+      limit: 10,
+    });
+
   const { searchResults, isLoading, isFetching } = useSearch<
     Song[]
   >(auth.token, searchValue, "track");
@@ -49,13 +60,20 @@ const SongFilterSection = ({
     []
   );
 
+  const shuffleTopSongs = () => {
+    if (topSongsCount) {
+      const rand = getRandomInt(topSongsCount - 10);
+      setOffset(rand);
+    }
+  };
+
   useLayoutEffect(() => {
-    if (searchValue.trim() === "") {
+    if (searchValue.trim() === "" && getTopSongsSuccess) {
       setSongs(topSongs);
       return;
     }
     if (searchResults) setSongs(searchResults);
-  }, [searchResults, searchValue, topSongs]);
+  }, [searchResults, searchValue, topSongs, getTopSongsSuccess]);
 
   return (
     <section className="filter-section">
@@ -65,6 +83,7 @@ const SongFilterSection = ({
         <IconButton
           iconSrc={updateIcon}
           style={IconButtonStyles.Secondary}
+          handleClick={shuffleTopSongs}
         />
         <Input
           label="Songs"
