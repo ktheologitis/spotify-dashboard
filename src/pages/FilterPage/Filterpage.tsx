@@ -1,13 +1,8 @@
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { useTopArtists } from "../../hooks/useTopArtists";
-import { useTopSongs } from "../../hooks/useTopSongs";
-import { useGenres } from "../../hooks/useGenres";
-import { useUser } from "../../hooks/useUser";
 import { useFilter } from "../../hooks/useFilter";
 import { IconButtonStyles } from "../../lib/enums";
 import { FiltersContext } from "../../contextProviders/FiltersContextProvider";
-import { AuthContext } from "../../contextProviders/AuthorizationContextProvider";
 import ArtistFilterSection from "../../components/FilterSections/ArtistFilterSection";
 import SongFilterSection from "../../components/FilterSections/SongFilterSection";
 import GenreFilterSection from "../../components/FilterSections/GenreFilterSection";

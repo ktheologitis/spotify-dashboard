@@ -8,15 +8,24 @@ import {
   Song,
 } from "../lib/types";
 
-export const useRecomendations = (
-  authToken: string,
-  filters: Nullable<Filters>
-): Nullable<Song[]> => {
-  const { data } = useQuery(
-    ["recommendations", filters],
+export const useRecomendations = ({
+  authToken,
+  filters,
+  limit = 30,
+}: {
+  authToken: string;
+  filters: Nullable<Filters>;
+  limit?: number;
+}): Nullable<Song[]> => {
+  const { data, isFetching, isSuccess, isError } = useQuery(
+    ["recommendations", [filters, limit]],
     async () => {
-      await sleep(2000);
-      return getRecommendations(authToken, filters as Filters);
+      // await sleep(2000);
+      return getRecommendations(
+        authToken,
+        filters as Filters,
+        limit
+      );
     },
     {
       enabled: filters != null,

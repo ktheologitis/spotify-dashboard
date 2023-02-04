@@ -16,16 +16,17 @@ const RecommendationsPage = () => {
   const navigate = useNavigate();
   const auth = useContext(AuthContext);
   const user = useUser(auth.token);
+  const { filters } = useContext(FiltersContext);
   const { topSongs } = useTopSongs({
     authToken: auth.token,
     userId: user?.id,
     limit: 30,
   });
-  const { filters } = useContext(FiltersContext);
-  const recommendationData = useRecomendations(
-    auth.token,
-    filters
-  );
+  const recommendationData = useRecomendations({
+    authToken: auth.token,
+    filters,
+    limit: 30,
+  });
 
   let songs: Nullable<Song[]> = topSongs;
 

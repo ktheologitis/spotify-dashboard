@@ -19,7 +19,7 @@ export const useTopSongs = ({
   topSongsCount: Nullable<number>;
   getTopSongsSuccess: boolean;
 } => {
-  const { data, isSuccess } = useQuery(
+  const { data, isFetching, isSuccess, isError } = useQuery(
     ["top/songs", [userId, offset, limit]],
     async () => {
       // await sleep(2000);

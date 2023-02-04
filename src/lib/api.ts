@@ -67,14 +67,15 @@ export async function getGenres(token: string) {
 
 export async function getRecommendations(
   token: string,
-  filters: Filters
+  filters: Filters,
+  limit: number
 ) {
   const offset = 10;
   const params = {
     seed_artists: filters.artists.join(","),
     seed_genres: filters.genres.join(","),
     seed_tracks: filters.songs.join(","),
-    limit: 20,
+    limit,
     max_acousticness: getAudioFeatureMax(
       filters.acousticness,
       offset
