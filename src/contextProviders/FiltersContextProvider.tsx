@@ -18,7 +18,7 @@ const FiltersContextProvider = ({
   });
 
   function update(newFilters: Filters) {
-    setFilters({ ...filters, filters: newFilters });
+    setFilters({ update, filters: newFilters });
   }
 
   return (

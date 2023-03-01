@@ -2,51 +2,39 @@
 
 .overlay {
   position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  min-width: 100vw;
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100vw;
-  height: 100vh;
   background-color: rgba(0, 0, 0, 0.67);
 }
 
 .dialog {
   position: relative;
-  width: 400px;
+  max-height: 80vh;
+  max-width: 70vw;
   padding: 2.4rem;
   border-radius: 3rem;
-  display: inline-flex;
+  display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: white;
   font-family: $app-font-regular;
   margin: 0 2.4rem;
+  overflow: auto;
+  background-color: $app-grey-dark;
 
   &__header {
     display: flex;
     justify-content: center;
     font-size: 1.6rem;
+    color: white;
   }
 
-  &__header-message {
-    text-align: center;
-  }
-
-  &__exit-icon {
-    position: absolute;
-    top: 1.6rem;
-    right: 1.6rem;
-    width: 2.4rem;
-    height: 2.4rem;
-  }
-
-  &__exit-icon:hover {
-    cursor: pointer;
-    background-color: lightgrey;
-    border-radius: 50%;
-  }
-
-  &__main-message {
+  &__main-content {
     font-size: 1.2rem;
     margin-bottom: 2.4rem;
   }
@@ -58,7 +46,7 @@
       font-size: 2rem;
     }
 
-    &__main-message {
+    &__main-content {
       font-size: 1.6rem;
     }
   }

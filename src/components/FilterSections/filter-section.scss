@@ -42,6 +42,19 @@
     display: flex;
     gap: 0.8rem;
     flex-wrap: wrap;
+
+    button {
+      font-size: 1.6rem;
+      font-family: $app-font-semibold;
+      color: white;
+      font-style: normal;
+      padding: 0;
+      background-color: $spotify-black;
+      border: 0;
+      &:hover {
+        cursor: pointer;
+      }
+    }
   }
 
   &__main--audio-feature {
@@ -55,11 +68,17 @@
     display: flex;
     justify-content: flex-end;
 
-    em {
-      font-size: 1.2rem;
+    button {
+      font-size: 1.6rem;
       font-family: $app-font-semibold;
       color: white;
       font-style: normal;
+      padding: 0;
+      background-color: $spotify-black;
+      border: 0;
+      &:hover {
+        cursor: pointer;
+      }
     }
   }
 }

@@ -10,21 +10,28 @@ import { IconButtonStyles } from "../../lib/enums";
 import updateIcon from "../../static/icons/update.svg";
 import { AuthContext } from "../../contextProviders/AuthorizationContextProvider";
 import { useSearch } from "../../hooks/useSearch";
-import { Artist, Nullable } from "../../lib/types";
+import {
+  Artist,
+  ArtistsFilter,
+  Nullable,
+} from "../../lib/types";
 import ArtistCard from "../ArtistCard/ArtistCard";
 import { FilterState } from "../../hooks/useFilter";
 import "./filter-section.scss";
 import { getRandomInt } from "../../lib/helpers";
 import { useUser } from "../../hooks/useUser";
 import { useTopArtists } from "../../hooks/useTopArtists";
+import cloneDeep from "lodash.clonedeep";
+import SelectedArtistsDialog from "../SelectedArtistsDialog/SelectedArtistsDialog";
 
 const ArtistFilterSection = ({
   artistsFilter,
 }: {
-  artistsFilter: FilterState<string[] | null>;
+  artistsFilter: FilterState<ArtistsFilter | null>;
 }) => {
   const auth = useContext(AuthContext);
   const user = useUser(auth.token);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const [offset, setOffset] = useState(0);
   const [artists, setArtists] =
@@ -38,20 +45,38 @@ const ArtistFilterSection = ({
       limit: 15,
     });
 
-  const { searchResults, isLoading, isFetching } = useSearch<
-    Artist[]
-  >(auth.token, searchValue, "artist");
+  const {
+    searchResults,
+    getSearchResultsSuccess,
+    isLoading,
+    isFetching,
+  } = useSearch<Artist[]>(auth.token, searchValue, "artist");
 
-  const handleArtistCardClick = (selected: string) => {
-    if (artistsFilter.data?.includes(selected)) {
-      artistsFilter.set(
-        artistsFilter.data.filter((item) => item !== selected)
+  const handleArtistCardClick = (clickedArtist: Artist) => {
+    if (artistsFilter.filter?.ids.includes(clickedArtist.id)) {
+      const newIds = artistsFilter.filter?.ids.filter(
+        (id) => id !== clickedArtist.id
       );
+      const newArtists = cloneDeep(artistsFilter.filter.data);
+      const filtered = newArtists.filter(
+        (artist) => artist.id !== clickedArtist.id
+      );
+      artistsFilter.set({
+        ids: newIds,
+        data: filtered,
+      });
       return;
     }
-    artistsFilter.data
-      ? artistsFilter.set([...artistsFilter.data, selected])
-      : artistsFilter.set([selected]);
+    const newArtists = cloneDeep(artistsFilter.filter?.data);
+    artistsFilter.filter
+      ? artistsFilter.set({
+          ids: [...artistsFilter.filter.ids, clickedArtist.id],
+          data: [...(newArtists as Artist[]), clickedArtist],
+        })
+      : artistsFilter.set({
+          ids: [clickedArtist.id],
+          data: [clickedArtist],
+        });
   };
 
   const handleSearchInputChange = useCallback(
@@ -69,22 +94,28 @@ const ArtistFilterSection = ({
   };
 
   useLayoutEffect(() => {
-    if (searchValue.trim() === "" && getTopArtistsSuccess) {
+    if (!searchValue.trim() && getTopArtistsSuccess) {
       setArtists(topArtists);
-      return;
     }
-    if (searchResults) {
+  }, [topArtists, getTopArtistsSuccess, searchValue]);
+
+  useLayoutEffect(() => {
+    if (getSearchResultsSuccess) {
       setArtists(searchResults);
     }
-  }, [
-    searchResults,
-    searchValue,
-    topArtists,
-    getTopArtistsSuccess,
-  ]);
+  }, [getSearchResultsSuccess, searchResults]);
 
   return (
     <>
+      <SelectedArtistsDialog
+        isOpen={isDialogOpen}
+        title="Selected artists"
+        artistsFilter={artistsFilter}
+        handleArtistCardClick={handleArtistCardClick}
+        closeDialog={() => {
+          setIsDialogOpen(false);
+        }}
+      />
       <section className="filter-section">
         <header className="filter-section__header">
           <h1 className="filter-section__title">Artists</h1>
@@ -104,13 +135,12 @@ const ArtistFilterSection = ({
               return (
                 <React.Fragment key={artist.id}>
                   <ArtistCard
+                    id={artist.id}
                     images={artist.images}
                     name={artist.name}
-                    selected={artistsFilter.data?.includes(
-                      artist.id
-                    )}
+                    artistsFilter={artistsFilter.filter}
                     handleClick={() => {
-                      handleArtistCardClick(artist.id);
+                      handleArtistCardClick(artist);
                     }}
                   />
                 </React.Fragment>
@@ -118,7 +148,13 @@ const ArtistFilterSection = ({
             })}
         </div>
         <footer className="filter-section__footer">
-          <em>See selected</em>
+          <button
+            onClick={() => {
+              setIsDialogOpen(true);
+            }}
+          >
+            See selected
+          </button>
         </footer>
       </section>
     </>

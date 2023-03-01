@@ -8,7 +8,7 @@ import IconButton from "../IconButton/IconButton";
 import Input from "../Input/Input";
 import { IconButtonStyles } from "../../lib/enums";
 import updateIcon from "../../static/icons/update.svg";
-import { Nullable, Song } from "../../lib/types";
+import { Nullable, Song, SongsFilter } from "../../lib/types";
 import { FilterState } from "../../hooks/useFilter";
 import "./filter-section.scss";
 import SongCard from "../SongCard/SongCard";
@@ -17,14 +17,17 @@ import { useSearch } from "../../hooks/useSearch";
 import { useUser } from "../../hooks/useUser";
 import { useTopSongs } from "../../hooks/useTopSongs";
 import { getRandomInt } from "../../lib/helpers";
+import cloneDeep from "lodash.clonedeep";
+import SelectedSongsDialog from "../SelectedSongsDialog/SelectedSongsDialog";
 
 const SongFilterSection = ({
-  songFilter,
+  songsFilter,
 }: {
-  songFilter: FilterState<string[] | null>;
+  songsFilter: FilterState<SongsFilter | null>;
 }) => {
   const auth = useContext(AuthContext);
   const user = useUser(auth.token);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const [offset, setOffset] = useState(0);
   const [songs, setSongs] = useState<Nullable<Song[]>>(null);
@@ -37,20 +40,38 @@ const SongFilterSection = ({
       limit: 15,
     });
 
-  const { searchResults, isLoading, isFetching } = useSearch<
-    Song[]
-  >(auth.token, searchValue, "track");
+  const {
+    searchResults,
+    getSearchResultsSuccess,
+    isLoading,
+    isFetching,
+  } = useSearch<Song[]>(auth.token, searchValue, "track");
 
-  const handleSongCardClick = (selected: string) => {
-    if (songFilter.data?.includes(selected)) {
-      songFilter.set(
-        songFilter.data.filter((item) => item !== selected)
+  const handleSongCardClick = (clickedSong: Song) => {
+    if (songsFilter.filter?.ids.includes(clickedSong.id)) {
+      const newIds = songsFilter.filter?.ids.filter(
+        (id) => id !== clickedSong.id
       );
+      const newSongs = cloneDeep(songsFilter.filter.data);
+      const filtered = newSongs.filter(
+        (song) => song.id !== clickedSong.id
+      );
+      songsFilter.set({
+        ids: newIds,
+        data: filtered,
+      });
       return;
     }
-    songFilter.data
-      ? songFilter.set([...songFilter.data, selected])
-      : songFilter.set([selected]);
+    const newSongs = cloneDeep(songsFilter.filter?.data);
+    songsFilter.filter
+      ? songsFilter.set({
+          ids: [...songsFilter.filter.ids, clickedSong.id],
+          data: [...(newSongs as Song[]), clickedSong],
+        })
+      : songsFilter.set({
+          ids: [clickedSong.id],
+          data: [clickedSong],
+        });
   };
 
   const handleSearchInputChange = useCallback(
@@ -68,51 +89,73 @@ const SongFilterSection = ({
   };
 
   useLayoutEffect(() => {
-    if (searchValue.trim() === "" && getTopSongsSuccess) {
+    if (!searchValue.trim() && getTopSongsSuccess) {
       setSongs(topSongs);
-      return;
     }
-    if (searchResults) setSongs(searchResults);
-  }, [searchResults, searchValue, topSongs, getTopSongsSuccess]);
+  }, [topSongs, getTopSongsSuccess, searchValue]);
+
+  useLayoutEffect(() => {
+    if (getSearchResultsSuccess) {
+      setSongs(searchResults);
+    }
+  }, [getSearchResultsSuccess, searchResults]);
 
   return (
-    <section className="filter-section">
-      <header className="filter-section__header">
-        <h1 className="filter-section__title">Songs</h1>
+    <>
+      <SelectedSongsDialog
+        isOpen={isDialogOpen}
+        title="Selected songs"
+        songsFilter={songsFilter}
+        handleSongCardClick={handleSongCardClick}
+        closeDialog={() => {
+          setIsDialogOpen(false);
+        }}
+      />
+      <section className="filter-section">
+        <header className="filter-section__header">
+          <h1 className="filter-section__title">Songs</h1>
 
-        <IconButton
-          iconSrc={updateIcon}
-          style={IconButtonStyles.Secondary}
-          handleClick={shuffleTopSongs}
-        />
-        <Input
-          label="Songs"
-          handleChangeValue={handleSearchInputChange}
-        />
-      </header>
-      <div className="filter-section__main">
-        {songs &&
-          songs.map((song) => {
-            return (
-              <React.Fragment key={song.id}>
-                <SongCard
-                  images={song.album.images}
-                  name={song.name}
-                  album={song.album.name}
-                  selectable
-                  selected={songFilter.data?.includes(song.id)}
-                  handleClick={() => {
-                    handleSongCardClick(song.id);
-                  }}
-                />
-              </React.Fragment>
-            );
-          })}
-      </div>
-      <footer className="filter-section__footer">
-        <em>See selected</em>
-      </footer>
-    </section>
+          <IconButton
+            iconSrc={updateIcon}
+            style={IconButtonStyles.Secondary}
+            handleClick={shuffleTopSongs}
+          />
+          <Input
+            label="Songs"
+            handleChangeValue={handleSearchInputChange}
+          />
+        </header>
+        <div className="filter-section__main">
+          {songs &&
+            songs.map((song) => {
+              return (
+                <React.Fragment key={song.id}>
+                  <SongCard
+                    id={song.id}
+                    images={song.album.images}
+                    name={song.name}
+                    album={song.album.name}
+                    selectable
+                    songsFilter={songsFilter.filter}
+                    handleClick={() => {
+                      handleSongCardClick(song);
+                    }}
+                  />
+                </React.Fragment>
+              );
+            })}
+        </div>
+        <footer className="filter-section__footer">
+          <button
+            onClick={() => {
+              setIsDialogOpen(true);
+            }}
+          >
+            See selected
+          </button>
+        </footer>
+      </section>
+    </>
   );
 };
 

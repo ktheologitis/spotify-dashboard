@@ -25,7 +25,7 @@ const FilterPage = () => {
   return (
     <main className="filter-page">
       <ArtistFilterSection artistsFilter={artistsFilter} />
-      <SongFilterSection songFilter={songsFilter} />
+      <SongFilterSection songsFilter={songsFilter} />
       <GenreFilterSection genresFilter={genresFilter} />
       <AudioFeatureFilterSection
         name="Acousticness"
@@ -49,20 +49,21 @@ const FilterPage = () => {
           style={IconButtonStyles.Primary}
           handleClick={() => {
             if (
-              artistsFilter.data &&
-              songsFilter.data &&
-              genresFilter.data
-            )
+              artistsFilter.filter &&
+              songsFilter.filter &&
+              genresFilter.filter
+            ) {
               update({
-                artists: artistsFilter.data,
-                songs: songsFilter.data,
-                genres: genresFilter.data,
-                acousticness: acousticnessFilter.data,
-                valence: valenceFilter.data,
-                danceability: danceabilityFilter.data,
-                loudness: loudnessFilter.data,
+                artists: artistsFilter.filter,
+                songs: songsFilter.filter,
+                genres: genresFilter.filter,
+                acousticness: acousticnessFilter.filter,
+                valence: valenceFilter.filter,
+                danceability: danceabilityFilter.filter,
+                loudness: loudnessFilter.filter,
               });
-            navigate("/");
+              navigate("/");
+            }
           }}
         />
       </section>

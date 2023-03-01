@@ -1,22 +1,30 @@
 import classNames from "classnames";
-import { useState } from "react";
-import { Image } from "../../lib/types";
+import { useState, useEffect } from "react";
+import { ArtistsFilter, Image } from "../../lib/types";
 import "./artist-card.scss";
 
 const ArtistCard = ({
+  id,
   name,
   images,
-  selected,
+  artistsFilter,
   handleClick,
 }: {
+  id: string;
   name: string;
   images: Image[];
-  selected?: boolean | undefined;
+  artistsFilter?: ArtistsFilter | null;
   handleClick?: () => void;
 }) => {
   const [isSelected, setIsSelected] = useState(
-    selected ? selected : false
+    artistsFilter ? artistsFilter?.ids.includes(id) : false
   );
+
+  useEffect(() => {
+    setIsSelected(
+      artistsFilter ? artistsFilter?.ids.includes(id) : false
+    );
+  }, [artistsFilter, id]);
 
   let image = "";
   if (images.length === 1) image = images[0].url;

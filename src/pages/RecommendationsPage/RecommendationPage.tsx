@@ -47,6 +47,7 @@ const RecommendationsPage = () => {
             return (
               <React.Fragment key={song.id}>
                 <SongCard
+                  id={song.id}
                   images={song.album.images}
                   name={song.name}
                   album={song.album.name}

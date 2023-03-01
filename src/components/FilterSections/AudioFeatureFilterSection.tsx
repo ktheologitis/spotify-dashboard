@@ -1,6 +1,7 @@
 import { FilterState } from "../../hooks/useFilter";
 import "./filter-section.scss";
 import SliderInput from "../SliderInput/SliderInput";
+import { useState, useEffect } from "react";
 
 const AudioFeatureFilterSection = ({
   name,
@@ -9,16 +10,29 @@ const AudioFeatureFilterSection = ({
   name: string;
   audioFeatureFilter: FilterState<number | null>;
 }) => {
+  const [audioFeatureValue, setAudioFeatureValue] = useState("");
+
   const handleSliderInput = (value: number) => {
     audioFeatureFilter.set(value);
   };
+
+  useEffect(() => {
+    if (
+      !audioFeatureFilter.filter ||
+      audioFeatureFilter.filter === 0
+    ) {
+      setAudioFeatureValue("");
+    } else {
+      setAudioFeatureValue(audioFeatureFilter.filter.toString());
+    }
+  }, [audioFeatureFilter.filter]);
 
   return (
     <section className="filter-section">
       <header className="filter-section__header">
         <h1 className="filter-section__title">{name}</h1>
         <div className="audio-feature-value">
-          {audioFeatureFilter.data?.toString() || ""}
+          {audioFeatureValue}
           <span> %</span>
         </div>
       </header>
@@ -26,8 +40,8 @@ const AudioFeatureFilterSection = ({
         <div className="slider-wrapper">
           <SliderInput
             currentValue={
-              audioFeatureFilter.data
-                ? audioFeatureFilter.data
+              audioFeatureFilter.filter
+                ? audioFeatureFilter.filter
                 : 0
             }
             handleChange={(newValue) => {

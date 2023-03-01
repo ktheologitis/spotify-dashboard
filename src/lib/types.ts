@@ -68,9 +68,13 @@ export type Song = z.infer<typeof SongSchema>;
 
 export type Artist = z.infer<typeof ArtistSchema>;
 
+export type ArtistsFilter = { ids: string[]; data: Artist[] };
+
+export type SongsFilter = { ids: string[]; data: Song[] };
+
 export type Filters = {
-  artists: string[];
-  songs: string[];
+  artists: ArtistsFilter;
+  songs: SongsFilter;
   genres: string[];
   acousticness: Nullable<number>;
   valence: Nullable<number>;

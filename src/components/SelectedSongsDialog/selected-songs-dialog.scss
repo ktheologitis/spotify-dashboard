@@ -1,0 +1,8 @@
+@import "../../stylesheets/variables";
+
+.selected-songs {
+  display: flex;
+  justify-content: center;
+  gap: 1.6rem;
+  flex-wrap: wrap;
+}

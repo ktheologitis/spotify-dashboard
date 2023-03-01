@@ -1,14 +1,17 @@
 import { useState } from "react";
+import { Filters } from "../lib/types";
 
-export const useFilter = <T>(
+type FilterKeys = keyof Filters;
+
+export const useFilter = <T extends Filters[FilterKeys]>(
   initialValue: T | null = null
 ): FilterState<T | null> => {
-  const [data, setData] = useState(initialValue);
+  const [filter, setFilter] = useState(initialValue);
 
-  return { data, set: setData };
+  return { filter, set: setFilter };
 };
 
 export type FilterState<T> = {
-  data: T;
+  filter: T;
   set: React.Dispatch<React.SetStateAction<T>>;
 };
