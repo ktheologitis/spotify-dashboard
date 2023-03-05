@@ -14,15 +14,15 @@ const Routing = () => {
           index
           element={
             <Authorized>
-              <RecommendationsPage />
+              <FilterPage />
             </Authorized>
           }
         />
         <Route
-          path="/filter"
+          path="/recommendations"
           element={
             <Authorized>
-              <FilterPage />
+              <RecommendationsPage />
             </Authorized>
           }
         />

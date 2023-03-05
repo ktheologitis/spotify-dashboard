@@ -48,22 +48,16 @@ const FilterPage = () => {
           iconSrc={okIcon}
           style={IconButtonStyles.Primary}
           handleClick={() => {
-            if (
-              artistsFilter.filter &&
-              songsFilter.filter &&
-              genresFilter.filter
-            ) {
-              update({
-                artists: artistsFilter.filter,
-                songs: songsFilter.filter,
-                genres: genresFilter.filter,
-                acousticness: acousticnessFilter.filter,
-                valence: valenceFilter.filter,
-                danceability: danceabilityFilter.filter,
-                loudness: loudnessFilter.filter,
-              });
-              navigate("/");
-            }
+            update({
+              artists: artistsFilter.filter,
+              songs: songsFilter.filter,
+              genres: genresFilter.filter,
+              acousticness: acousticnessFilter.filter,
+              valence: valenceFilter.filter,
+              danceability: danceabilityFilter.filter,
+              loudness: loudnessFilter.filter,
+            });
+            navigate("/recommendations");
           }}
         />
       </section>

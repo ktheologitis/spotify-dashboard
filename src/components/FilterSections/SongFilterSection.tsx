@@ -16,9 +16,10 @@ import { AuthContext } from "../../contextProviders/AuthorizationContextProvider
 import { useSearch } from "../../hooks/useSearch";
 import { useUser } from "../../hooks/useUser";
 import { useTopSongs } from "../../hooks/useTopSongs";
-import { getRandomInt } from "../../lib/helpers";
+import { getArray, getRandomInt } from "../../lib/helpers";
 import cloneDeep from "lodash.clonedeep";
 import SelectedSongsDialog from "../SelectedSongsDialog/SelectedSongsDialog";
+import SongCardSkeleton from "../SongCardSkeleton/SongCardSkeleton";
 
 const SongFilterSection = ({
   songsFilter,
@@ -31,14 +32,20 @@ const SongFilterSection = ({
   const [searchValue, setSearchValue] = useState("");
   const [offset, setOffset] = useState(0);
   const [songs, setSongs] = useState<Nullable<Song[]>>(null);
+  const SONGS_LIMIT = 15;
+  const songsSkeletonArray = getArray(SONGS_LIMIT);
 
-  const { topSongs, topSongsCount, getTopSongsSuccess } =
-    useTopSongs({
-      authToken: auth.token,
-      userId: user?.id,
-      offset: offset,
-      limit: 15,
-    });
+  const {
+    topSongs,
+    topSongsCount,
+    getTopSongsSuccess,
+    topSongsLoading,
+  } = useTopSongs({
+    authToken: auth.token,
+    userId: user?.id,
+    offset: offset,
+    limit: SONGS_LIMIT,
+  });
 
   const {
     searchResults,
@@ -127,6 +134,7 @@ const SongFilterSection = ({
         </header>
         <div className="filter-section__main">
           {songs &&
+            !topSongsLoading &&
             songs.map((song) => {
               return (
                 <React.Fragment key={song.id}>
@@ -143,6 +151,10 @@ const SongFilterSection = ({
                   />
                 </React.Fragment>
               );
+            })}
+          {topSongsLoading &&
+            songsSkeletonArray.map((index) => {
+              return <SongCardSkeleton key={index} />;
             })}
         </div>
         <footer className="filter-section__footer">

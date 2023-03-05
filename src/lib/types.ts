@@ -73,9 +73,9 @@ export type ArtistsFilter = { ids: string[]; data: Artist[] };
 export type SongsFilter = { ids: string[]; data: Song[] };
 
 export type Filters = {
-  artists: ArtistsFilter;
-  songs: SongsFilter;
-  genres: string[];
+  artists: Nullable<ArtistsFilter>;
+  songs: Nullable<SongsFilter>;
+  genres: Nullable<string[]>;
   acousticness: Nullable<number>;
   valence: Nullable<number>;
   danceability: Nullable<number>;

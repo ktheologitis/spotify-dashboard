@@ -67,7 +67,7 @@ const RecommendationsPage = () => {
           iconSrc={filterIcon}
           style={IconButtonStyles.Primary}
           handleClick={() => {
-            navigate("/filter");
+            navigate("/");
           }}
         />
       </section>

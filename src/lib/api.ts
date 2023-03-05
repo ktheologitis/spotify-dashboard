@@ -66,9 +66,9 @@ export async function getRecommendations(
 ) {
   const offset = 10;
   const params = {
-    seed_artists: filters.artists.ids.join(","),
-    seed_genres: filters.genres.join(","),
-    seed_tracks: filters.songs.ids.join(","),
+    seed_artists: filters.artists?.ids.join(","),
+    seed_genres: filters.genres?.join(","),
+    seed_tracks: filters.songs?.ids.join(","),
     limit,
     max_acousticness: getAudioFeatureMax(
       filters.acousticness,

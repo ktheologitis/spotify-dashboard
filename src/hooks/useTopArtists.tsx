@@ -5,7 +5,6 @@ import {
   Nullable,
   TopArtistsSchema,
 } from "../lib/types";
-import { sleep } from "../lib/helpers";
 import { useMemo } from "react";
 
 export const useTopArtists = ({
@@ -22,11 +21,11 @@ export const useTopArtists = ({
   topArtists: Nullable<Artist[]>;
   topArtistsCount: Nullable<number>;
   getTopArtistsSuccess: boolean;
+  topArtisIsLoading: boolean;
 } => {
-  const { data, isSuccess } = useQuery(
+  const { data, isSuccess, isLoading } = useQuery(
     ["top/artists", [userId, offset, limit]],
     async () => {
-      // await sleep(2000);
       return getUserTopArtists(authToken, offset, limit);
     },
     {
@@ -48,5 +47,6 @@ export const useTopArtists = ({
       ? parsedData.data.total
       : null,
     getTopArtistsSuccess: isSuccess,
+    topArtisIsLoading: isLoading,
   };
 };

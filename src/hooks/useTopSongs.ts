@@ -1,7 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { getUserTopSongs } from "../lib/api";
 import { Nullable, Song, TopSongsSchema } from "../lib/types";
-import { sleep } from "../lib/helpers";
 import { useMemo } from "react";
 
 export const useTopSongs = ({
@@ -18,11 +17,11 @@ export const useTopSongs = ({
   topSongs: Nullable<Song[]>;
   topSongsCount: Nullable<number>;
   getTopSongsSuccess: boolean;
+  topSongsLoading: boolean;
 } => {
-  const { data, isFetching, isSuccess, isError } = useQuery(
+  const { data, isLoading, isSuccess } = useQuery(
     ["top/songs", [userId, offset, limit]],
     async () => {
-      // await sleep(2000);
       return getUserTopSongs(authToken, offset, limit);
     },
     {
@@ -42,5 +41,6 @@ export const useTopSongs = ({
       ? parsedData.data.total
       : null,
     getTopSongsSuccess: isSuccess,
+    topSongsLoading: isLoading,
   };
 };

@@ -43,3 +43,11 @@ export const sleep = (ms: number) => {
 export const getRandomInt = (max: number) => {
   return Math.floor(Math.random() * max);
 };
+
+export const getArray = (length: number) => {
+  let array = [];
+  for (let index = 0; index < length; index++) {
+    array.push(index);
+  }
+  return array;
+};

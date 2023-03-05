@@ -18,11 +18,12 @@ import {
 import ArtistCard from "../ArtistCard/ArtistCard";
 import { FilterState } from "../../hooks/useFilter";
 import "./filter-section.scss";
-import { getRandomInt } from "../../lib/helpers";
+import { getArray, getRandomInt } from "../../lib/helpers";
 import { useUser } from "../../hooks/useUser";
 import { useTopArtists } from "../../hooks/useTopArtists";
 import cloneDeep from "lodash.clonedeep";
 import SelectedArtistsDialog from "../SelectedArtistsDialog/SelectedArtistsDialog";
+import ArtistCardSkeleton from "../ArtistCardSkeleton/ArtistCardSkeleton";
 
 const ArtistFilterSection = ({
   artistsFilter,
@@ -36,14 +37,20 @@ const ArtistFilterSection = ({
   const [offset, setOffset] = useState(0);
   const [artists, setArtists] =
     useState<Nullable<Artist[]>>(null);
+  const ARTISTS_LIMIT = 15;
+  const artistSkeletonArray = getArray(ARTISTS_LIMIT);
 
-  const { topArtists, topArtistsCount, getTopArtistsSuccess } =
-    useTopArtists({
-      authToken: auth.token,
-      userId: user?.id,
-      offset,
-      limit: 15,
-    });
+  const {
+    topArtists,
+    topArtistsCount,
+    getTopArtistsSuccess,
+    topArtisIsLoading,
+  } = useTopArtists({
+    authToken: auth.token,
+    userId: user?.id,
+    offset,
+    limit: ARTISTS_LIMIT,
+  });
 
   const {
     searchResults,
@@ -131,6 +138,7 @@ const ArtistFilterSection = ({
         </header>
         <div className="filter-section__main">
           {artists &&
+            !topArtisIsLoading &&
             artists.map((artist) => {
               return (
                 <React.Fragment key={artist.id}>
@@ -145,6 +153,10 @@ const ArtistFilterSection = ({
                   />
                 </React.Fragment>
               );
+            })}
+          {topArtisIsLoading &&
+            artistSkeletonArray.map((index) => {
+              return <ArtistCardSkeleton key={index} />;
             })}
         </div>
         <footer className="filter-section__footer">
