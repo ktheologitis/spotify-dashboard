@@ -13,15 +13,14 @@ export const useSearch = <T extends Artist[] | Song[]>(
   searchValue: string,
   type: "artist" | "track"
 ) => {
-  const { data, isLoading, isFetching, isError, isSuccess } =
-    useQuery({
-      queryKey: ["search", [searchValue, type]],
-      queryFn: async () => {
-        return search<T>(authToken, searchValue, type);
-      },
-      enabled: authToken !== "" && searchValue.trim() !== "",
-      staleTime: Infinity,
-    });
+  const { data, isFetching, isSuccess } = useQuery({
+    queryKey: ["search", [searchValue, type]],
+    queryFn: async () => {
+      return search<T>(authToken, searchValue, type);
+    },
+    enabled: authToken !== "" && searchValue.trim() !== "",
+    staleTime: Infinity,
+  });
 
   const parsedArtistData = useMemo(
     () => ArtistSearchSchema.safeParse(data),
@@ -47,8 +46,6 @@ export const useSearch = <T extends Artist[] | Song[]>(
   return {
     searchResults: searchData as T | null,
     getSearchResultsSuccess: isSuccess,
-    isLoading,
-    isFetching,
-    isError,
+    isSearchLoading: isFetching,
   };
 };

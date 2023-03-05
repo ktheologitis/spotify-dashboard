@@ -1,15 +1,7 @@
 import { Slider } from "@mui/material";
-import {
-  createTheme,
-  ThemeProvider,
-} from "@mui/material/styles";
+import { ThemeProvider } from "@mui/material/styles";
+import { theme } from "../../theme";
 import "./slider-input.scss";
-
-const theme = createTheme({
-  palette: {
-    primary: { main: "#1db954" },
-  },
-});
 
 const SliderInput = ({
   handleChange,

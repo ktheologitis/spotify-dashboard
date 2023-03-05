@@ -55,8 +55,7 @@ const ArtistFilterSection = ({
   const {
     searchResults,
     getSearchResultsSuccess,
-    isLoading,
-    isFetching,
+    isSearchLoading,
   } = useSearch<Artist[]>(auth.token, searchValue, "artist");
 
   const handleArtistCardClick = (clickedArtist: Artist) => {
@@ -133,6 +132,7 @@ const ArtistFilterSection = ({
           />
           <Input
             label="Artists"
+            loading={isSearchLoading}
             handleChangeValue={handleSearchInputChange}
           />
         </header>

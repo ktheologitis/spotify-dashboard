@@ -1,13 +1,18 @@
 import { useEffect, useState } from "react";
 import { useDebounce } from "../../hooks/useDebounce";
+import CircularProgress from "@mui/material/CircularProgress";
+import { ThemeProvider } from "@mui/material/styles";
 import searchIcon from "../../static/icons/search.svg";
 import "./input.scss";
+import { theme } from "../../theme";
 
 const Input = ({
   label,
+  loading,
   handleChangeValue,
 }: {
   label: string;
+  loading: boolean;
   handleChangeValue: (newInput: string) => void;
 }) => {
   const [input, setInput] = useState("");
@@ -23,7 +28,13 @@ const Input = ({
         className="input-container__icon"
         htmlFor="spotify-input"
       >
-        <img src={searchIcon} alt="search" loading="lazy" />
+        {loading ? (
+          <ThemeProvider theme={theme}>
+            <CircularProgress size={24} color="primary" />
+          </ThemeProvider>
+        ) : (
+          <img src={searchIcon} alt="search" loading="lazy" />
+        )}
       </label>
       <input
         type="search"

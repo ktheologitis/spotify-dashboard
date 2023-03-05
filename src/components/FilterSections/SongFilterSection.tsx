@@ -50,8 +50,7 @@ const SongFilterSection = ({
   const {
     searchResults,
     getSearchResultsSuccess,
-    isLoading,
-    isFetching,
+    isSearchLoading,
   } = useSearch<Song[]>(auth.token, searchValue, "track");
 
   const handleSongCardClick = (clickedSong: Song) => {
@@ -129,6 +128,7 @@ const SongFilterSection = ({
           />
           <Input
             label="Songs"
+            loading={isSearchLoading}
             handleChangeValue={handleSearchInputChange}
           />
         </header>
