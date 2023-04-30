@@ -1,8 +1,9 @@
 @import "../../stylesheets/variables";
 
 .filter-section {
-  margin-top: 2.4rem;
+  margin-top: 6rem;
   &__title {
+    margin: 0;
     font-family: $app-font-bold;
     font-size: 2rem;
     color: white;
@@ -23,7 +24,6 @@
       font-family: $app-font-bold;
       font-size: 1.6rem;
       color: white;
-      margin-left: auto;
     }
   }
 
@@ -86,7 +86,7 @@
 @media screen and (min-width: 768px) {
   .filter-section {
     &__title {
-      font-size: 3.2rem;
+      font-size: 2.4rem;
     }
 
     &__header {

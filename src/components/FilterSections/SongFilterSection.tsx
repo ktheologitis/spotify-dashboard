@@ -163,7 +163,10 @@ const SongFilterSection = ({
               setIsDialogOpen(true);
             }}
           >
-            See selected
+            See selected{" "}
+            {songsFilter.filter?.ids.length
+              ? `(${songsFilter.filter?.ids.length})`
+              : ""}
           </button>
         </footer>
       </section>

@@ -1,18 +1,28 @@
 @import "../../stylesheets/variables";
 
 .filter-page {
+  position: relative;
   padding: 0 $app-main-content-padding-mobile;
+
+  .filter-section:last-of-type {
+    margin-bottom: 10rem;
+  }
 }
 
 .ok-icon-button {
-  display: flex;
-  justify-content: flex-end;
-  position: sticky;
+  position: fixed;
   bottom: 2rem;
+  right: 20rem;
 }
 
 @media screen and (min-width: 768px) {
   .filter-page {
     padding: 0 $app-main-content-padding;
+  }
+}
+
+@media screen and (min-width: 2048px) {
+  .filter-page {
+    padding: 0 $app-main-content-padding-lg-screen;
   }
 }

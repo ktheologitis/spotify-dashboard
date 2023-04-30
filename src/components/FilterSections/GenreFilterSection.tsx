@@ -3,9 +3,6 @@ import React, {
   useLayoutEffect,
   useState,
 } from "react";
-import IconButton from "../IconButton/IconButton";
-import { IconButtonStyles } from "../../lib/enums";
-import informationIcon from "../../static/icons/information.svg";
 import { Nullable } from "../../lib/types";
 import { FilterState } from "../../hooks/useFilter";
 import "./filter-section.scss";
@@ -46,10 +43,6 @@ const GenreFilterSection = ({
     <section className="filter-section">
       <header className="filter-section__header">
         <h1 className="filter-section__title">Genres</h1>
-        <IconButton
-          iconSrc={informationIcon}
-          style={IconButtonStyles.Secondary}
-        />
       </header>
       <div className="filter-section__main--genres">
         {displayedGenres &&

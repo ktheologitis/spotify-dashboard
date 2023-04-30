@@ -36,7 +36,7 @@ const AudioFeatureFilterSection = ({
           <span> %</span>
         </div>
       </header>
-      <main className="filter-section__main--audio-feature">
+      <section className="filter-section__main--audio-feature">
         <div className="slider-wrapper">
           <SliderInput
             currentValue={
@@ -49,7 +49,7 @@ const AudioFeatureFilterSection = ({
             }}
           />
         </div>
-      </main>
+      </section>
     </section>
   );
 };

@@ -11,6 +11,8 @@ import IconButton from "../../components/IconButton/IconButton";
 import SongCard from "../../components/SongCard/SongCard";
 import filterIcon from "../../static/icons/filter.svg";
 import "./recommendations-page.scss";
+import { getArray } from "../../lib/helpers";
+import SongCardSkeleton from "../../components/SongCardSkeleton/SongCardSkeleton";
 
 const RecommendationsPage = () => {
   const navigate = useNavigate();
@@ -22,16 +24,18 @@ const RecommendationsPage = () => {
     userId: user?.id,
     limit: 30,
   });
-  const recommendationData = useRecomendations({
+  const RECOMMENDATIONS_LIMIT = 30;
+  const recommendationsArray = getArray(RECOMMENDATIONS_LIMIT);
+  const { recommendations, isLoading } = useRecomendations({
     authToken: auth.token,
     filters,
-    limit: 30,
+    limit: RECOMMENDATIONS_LIMIT,
   });
 
   let songs: Nullable<Song[]> = topSongs;
 
-  if (recommendationData) {
-    songs = recommendationData;
+  if (recommendations) {
+    songs = recommendations;
   }
 
   return (
@@ -43,6 +47,7 @@ const RecommendationsPage = () => {
       </header>
       <section className="recommendations-page__content">
         {songs &&
+          !isLoading &&
           songs.map((song) => {
             return (
               <React.Fragment key={song.id}>
@@ -60,6 +65,10 @@ const RecommendationsPage = () => {
                 />
               </React.Fragment>
             );
+          })}
+        {isLoading &&
+          recommendationsArray.map((index) => {
+            return <SongCardSkeleton key={index} />;
           })}
       </section>
       <section className="filter-icon-button">

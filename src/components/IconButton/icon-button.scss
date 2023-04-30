@@ -24,15 +24,16 @@
 }
 
 .icon-button.icon-button--secondary {
-  width: 3.2rem;
-  height: 3.2rem;
+  display: flex;
+  justify-content: center;
+  height: 3rem;
+  width: 3rem;
   background-color: $spotify-black;
 
-  &:hover {
-    background-color: transparent;
-  }
-
   .icon {
+    align-self: center;
+    width: 2.4rem;
+    height: 2.4rem;
     filter: brightness(0) invert(1);
   }
 }

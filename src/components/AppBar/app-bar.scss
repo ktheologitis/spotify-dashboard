@@ -17,11 +17,18 @@
 
 @media screen and (min-width: 768px) {
   .app-bar {
-    padding: 0 2.4rem;
+    padding: 0 $app-main-content-padding;
     height: $app-bar-height;
   }
 
   .app-title {
     font-size: 2.4rem;
+  }
+}
+
+@media screen and (min-width: 2048px) {
+  .app-bar {
+    padding: 0 $app-main-content-padding-lg-screen;
+    height: $app-bar-height;
   }
 }

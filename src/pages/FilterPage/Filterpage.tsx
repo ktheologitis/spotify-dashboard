@@ -39,11 +39,7 @@ const FilterPage = () => {
         name="Danceability"
         audioFeatureFilter={danceabilityFilter}
       />
-      <AudioFeatureFilterSection
-        name="Loudness"
-        audioFeatureFilter={loudnessFilter}
-      />
-      <section className="ok-icon-button">
+      <div className="ok-icon-button">
         <IconButton
           iconSrc={okIcon}
           style={IconButtonStyles.Primary}
@@ -60,7 +56,7 @@ const FilterPage = () => {
             navigate("/recommendations");
           }}
         />
-      </section>
+      </div>
     </main>
   );
 };

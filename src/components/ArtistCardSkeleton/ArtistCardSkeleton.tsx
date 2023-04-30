@@ -4,15 +4,14 @@ import Box from "@mui/material/Box";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
 const ArtistCardSkeleton = () => {
-  const matchesDesktop = useMediaQuery("(min-width: 992px)");
-  const matchesTablet = useMediaQuery(
-    "(min-width: 768px, max-width: 991px)"
-  );
+  const matchesLarge = useMediaQuery("(min-width: 2048px)");
+  const matchesBig = useMediaQuery("(min-width: 768px)");
 
   let size = 100;
-  if (matchesTablet) {
+  let fontSize = "1.2rem";
+  if (matchesBig) {
     size = 150;
-  } else if (matchesDesktop) {
+  } else if (matchesLarge) {
     size = 180;
   }
 
@@ -28,12 +27,12 @@ const ArtistCardSkeleton = () => {
       <Skeleton
         animation="pulse"
         variant="text"
-        sx={{ fontSize: "1.6rem", bgcolor: "#272222" }}
+        sx={{ fontSize, bgcolor: "#272222" }}
       />
       <Skeleton
         animation="pulse"
         variant="text"
-        sx={{ fontSize: "1.6rem", bgcolor: "#272222" }}
+        sx={{ fontSize, bgcolor: "#272222" }}
       />
       <Box sx={{ marginBottom: "10px" }} />
     </Stack>

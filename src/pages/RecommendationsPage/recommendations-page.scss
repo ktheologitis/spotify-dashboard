@@ -1,12 +1,14 @@
 @import "../../stylesheets/variables";
 
 .recommendations-page {
+  margin-top: 6rem;
+  margin-bottom: 10rem;
   padding: 0 $app-main-content-padding-mobile;
 
   &__title {
-    margin-top: 2.4rem;
+    margin-top: 2rem;
     font-family: $app-font-bold;
-    font-size: 2rem;
+    font-size: 2.4rem;
     color: white;
   }
 
@@ -14,34 +16,28 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
     gap: 2.4rem;
+
+    .song-card,
+    .song-card > .song-card__image {
+      min-width: 100%;
+    }
   }
 }
 .filter-icon-button {
-  display: flex;
-  justify-content: flex-end;
-  position: sticky;
+  position: fixed;
   bottom: 2rem;
+  right: 20rem;
 }
 
 @media screen and (min-width: 768px) {
   .recommendations-page {
+    font-size: 2.4rem;
     padding: 0 $app-main-content-padding;
 
     &__content {
       grid-template-columns: repeat(
         auto-fit,
         minmax(150px, 1fr)
-      );
-    }
-  }
-}
-
-@media screen and (min-width: 992px) {
-  .recommendations-page {
-    &__content {
-      grid-template-columns: repeat(
-        auto-fit,
-        minmax(180px, 1fr)
       );
     }
   }

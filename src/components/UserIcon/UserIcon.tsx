@@ -17,7 +17,7 @@ const UserIcon = () => {
       <img
         src={user?.images[0]?.url}
         className="user-icon__image"
-        alt="profile-pic"
+        alt=""
         loading="lazy"
       />
       <p className="user-icon__name">{user?.display_name}</p>
