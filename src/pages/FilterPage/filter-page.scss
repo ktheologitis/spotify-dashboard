@@ -12,17 +12,25 @@
 .ok-icon-button {
   position: fixed;
   bottom: 2rem;
-  right: 20rem;
+  right: 1.6rem;
 }
 
 @media screen and (min-width: 768px) {
   .filter-page {
     padding: 0 $app-main-content-padding;
   }
+
+  .ok-icon-button {
+    right: 20rem;
+  }
 }
 
 @media screen and (min-width: 2048px) {
   .filter-page {
     padding: 0 $app-main-content-padding-lg-screen;
+  }
+
+  .ok-icon-button {
+    right: 40rem;
   }
 }

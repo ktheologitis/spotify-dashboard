@@ -17,10 +17,18 @@
 
   &__title {
     font-family: $app-font-regular;
-    font-size: 2rem;
+    font-size: 1.8rem;
     text-align: center;
     color: white;
     margin-bottom: 2.4rem;
+  }
+
+  &__subtitle {
+    margin-top: 0;
+    font-family: $app-font-regular;
+    color: white;
+    font-style: italic;
+    font-weight: 500;
   }
 
   &__important-message,

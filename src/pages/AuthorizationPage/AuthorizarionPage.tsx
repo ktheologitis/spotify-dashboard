@@ -7,8 +7,11 @@ const AuthorizationPage = () => {
   return (
     <main className="authorization-page">
       <h1 className="authorization-page__title">
-        To use this app you need user authorization.
+        Give us authorization to access your Spotify profile
       </h1>
+      <h2 className="authorization-page__subtitle">
+        We don't keep any of your data!
+      </h2>
       <Button
         label="Authorize"
         style={ButtonStyles.Primary}
