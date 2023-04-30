@@ -25,7 +25,6 @@ root.render(
             <App />
           </FiltersContextProvider>
         </AuthorizationContextProvider>
-        <ReactQueryDevtools />
       </QueryClientProvider>
     </BrowserRouter>
   </React.StrictMode>
