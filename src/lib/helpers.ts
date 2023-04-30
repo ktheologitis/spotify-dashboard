@@ -7,7 +7,7 @@ export const getTokenFromUrl = () => {
 export const authorize = () => {
   window.location.href = `https://accounts.spotify.com/en/authorize?response_type=token&client_id=${CLIENT_ID}&scope=${encodeURIComponent(
     SCOPE
-  )}&redirect_uri=${encodeURIComponent(REDIRECT_CALLBACK)}`;
+  )}&redirect_uri=${encodeURIComponent(REDIRECT_CALLBACK())}`;
 };
 
 export const signup = () => {
